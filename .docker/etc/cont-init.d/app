@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bash
+
+echo "** Installing dependencies **"
+composer install --prefer-dist
+
+exit 0

@@ -1,0 +1,6 @@
+*/.*
+.*
+!.docker
+Dockerfile
+README.md
+vendor

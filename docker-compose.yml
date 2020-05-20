@@ -1,0 +1,18 @@
+---
+version: "3.7"
+networks:
+  app:
+    driver: bridge
+
+services:
+  app:
+    build: .
+
+    volumes:
+      - .:/var/www/:cached
+
+    ports:
+      - "80:80"
+
+    networks:
+      - app

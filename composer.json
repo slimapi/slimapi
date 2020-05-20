@@ -1,0 +1,19 @@
+{
+    "name": "slimapi/slimapi",
+    "description": "SlimAPI",
+    "license": "MIT",
+    "archive": {
+        "exclude": [".*", "*", "!/src", "!LICENSE.md", "!README.md"]
+    },
+    "autoload": {
+        "psr-4": {
+            "SlimAPI\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.4"
+    },
+    "require-dev": {
+        "tracy/tracy": "~2.7.5"
+    }
+}
