@@ -16,3 +16,6 @@ services:
 
     networks:
       - app
+
+    environment:
+      TEST_ENV: foo

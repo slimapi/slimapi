@@ -1,2 +1,6 @@
+public/coverage
 vendor/
+vendor-global/
+tmp/*
+!tmp/.gitkeep
 composer.lock

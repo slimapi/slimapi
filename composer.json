@@ -10,8 +10,14 @@
             "SlimAPI\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SlimAPI\\Tests\\": "tests/"
+        }
+    },
     "require": {
-        "php": "^7.4"
+        "php": "^7.4",
+        "nette/bootstrap": "^3.0"
     },
     "require-dev": {
         "tracy/tracy": "~2.7.5"

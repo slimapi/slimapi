@@ -1,5 +1,8 @@
 #!/usr/bin/with-contenv bash
 
+echo "** Copying global composer vendor for code completion **"
+cp -r /root/.composer/vendor /var/www/vendor-global
+
 echo "** Installing dependencies **"
 composer install --prefer-dist
 
