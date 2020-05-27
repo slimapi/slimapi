@@ -17,9 +17,19 @@
     },
     "require": {
         "php": "^7.4",
-        "nette/bootstrap": "^3.0"
+        "ext-json": "*",
+        "nette/bootstrap": "^3.0",
+        "slim/slim": "^4.5",
+        "slimapi/psr7": "^1.1"
     },
     "require-dev": {
         "tracy/tracy": "~2.7.5"
+    },
+    "scripts": {
+        "phpcs": "phpcs",
+        "phpcbf": "phpcbf",
+        "tests": "phpunit --no-coverage",
+        "tests-coverage": "phpunit",
+        "phpstan": "phpstan analyse --configuration=/var/www/.phpstan/phpstan.neon src/ tests/"
     }
 }

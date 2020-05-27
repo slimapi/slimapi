@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Tests\DI\Config\Adapters;
+namespace SlimAPI\Tests\Integration\DI\Config\Adapters;
 
 use SlimAPI\DI\Config\Adapters\NeonAdapter;
 use SlimAPI\Tests\TestCase;
@@ -12,7 +12,10 @@ class NeonAdapterTest extends TestCase
     public function testLoad(): void
     {
         $adapter = new NeonAdapter();
-        self::assertSame(['specialParameter' => 'foo'], $adapter->load(__DIR__ . '/config.neon')['parameters']);
+        self::assertSame(
+            'test_env_val',
+            $adapter->load(__FIXTURES_DIR__ . '/neon_env_substitution.neon')['parameters']['specialParameter'],
+        );
     }
 
     public function testDump(): void
