@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Tests\Integration\DI\Config\Adapters;
+namespace SlimAPI\Tests\Integration\DI;
 
-use SlimAPI\DI\Config\Adapters\NeonAdapter;
+use SlimAPI\DI\NeonAdapter;
 use SlimAPI\Tests\TestCase;
 
 class NeonAdapterTest extends TestCase

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\DI\Config\Adapters;
+namespace SlimAPI\DI;
 
 use Nette\DI\Config\Adapter;
 use Nette\DI\Config\Adapters\NeonAdapter as BaseNeonAdapter;
