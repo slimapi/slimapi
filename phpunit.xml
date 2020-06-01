@@ -1,5 +1,4 @@
 <phpunit
-    backupGlobals="true"
     beStrictAboutChangesToGlobalState="true"
     beStrictAboutCoversAnnotation="true"
     beStrictAboutOutputDuringTests="true"

@@ -20,7 +20,9 @@ class Application extends App
 
     public function run(?ServerRequestInterface $request = null): void
     {
-        $request = $this->getContainer()->getByType(ServerRequestInterface::class);
+        if ($request === null) {
+            $request = $this->getContainer()->getByType(ServerRequestInterface::class);
+        }
 
         $response = $this->handle($request);
         $responseEmitter = new ResponseEmitter();

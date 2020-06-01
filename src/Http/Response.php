@@ -9,6 +9,12 @@ use Slim\Psr7\Response as BaseResponse;
 
 class Response extends BaseResponse
 {
+    public function write(string $data): self
+    {
+        $this->getBody()->write($data);
+        return $this;
+    }
+
     public function withJson(array $data, int $status = StatusCodeInterface::STATUS_OK, int $options = JSON_THROW_ON_ERROR): self
     {
         $clone = clone $this;
