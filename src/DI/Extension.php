@@ -27,12 +27,10 @@ class Extension extends CompilerExtension
         $config = $this->validateConfig($this->defaults);
 
         $container = $builder->addDefinition($this->prefix('container'))
-            ->setFactory(ContainerAdapter::class, [$this->name])
-            ->setAutowired(false);
+            ->setFactory(ContainerAdapter::class, [$this->name]);
 
         $chainConfigurator = $builder->addDefinition($this->prefix('chainConfigurator'))
-            ->setFactory(ChainConfigurator::class)
-            ->setAutowired(false);
+            ->setFactory(ChainConfigurator::class);
 
         foreach ($config['configurators'] as $configurator) {
             if (!$configurator instanceof Statement) {
@@ -49,26 +47,23 @@ class Extension extends CompilerExtension
             /** @var string $name */
             $name = preg_replace('#[^a-zA-Z0-9_]+#', '_', $entityName);
 
-            $configuratorService = $builder->addDefinition($this->prefix($name))
-                ->setFactory($configurator)
-                ->setAutowired(true);
+            $configuratorService = $builder
+                ->addDefinition($this->prefix($name))
+                ->setFactory($configurator);
 
             $chainConfigurator->addSetup('addConfigurator', [$configuratorService]);
         }
 
         $builder->addDefinition($this->prefix('request'))
             ->setType(ServerRequestInterface::class)
-            ->setFactory(RequestFactory::class . '::createFromGlobals')
-            ->setAutowired(true);
+            ->setFactory(RequestFactory::class . '::createFromGlobals');
 
         $responseFactory = $builder->addDefinition($this->prefix('responseFactory'))
             ->setFactory(ResponseFactory::class)
-            ->addSetup(new Statement(ResponseFactory::class . '::$responseClass = ?', [Response::class]))
-            ->setAutowired(false);
+            ->addSetup(new Statement(ResponseFactory::class . '::$responseClass = ?', [Response::class]));
 
         $builder->addDefinition($this->prefix('applicationFactory'))
-            ->setFactory(ApplicationFactory::class, [$responseFactory, $container, $chainConfigurator])
-            ->setAutowired(false);
+            ->setFactory(ApplicationFactory::class, [$responseFactory, $container, $chainConfigurator]);
 
         $builder->addDefinition($this->prefix('application'))
             ->setFactory($this->prefix('@applicationFactory::createApplication'));

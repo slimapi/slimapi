@@ -1,0 +1,5 @@
+includes:
+    - routes_success.neon
+
+routes:
+    - [GET, /routes-test-fail, SlimAPI\Tests\Integration\Routing\ConfiguratorTest::fail]

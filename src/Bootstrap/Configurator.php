@@ -11,6 +11,7 @@ use Nette\DI\Extensions\ExtensionsExtension;
 use Nette\DI\Extensions\PhpExtension;
 use SlimAPI\DI\Extension as SlimExtension;
 use SlimAPI\DI\NeonAdapter;
+use SlimAPI\Routing\Extension as RoutesExtension;
 
 class Configurator extends BaseConfigurator
 {
@@ -20,6 +21,7 @@ class Configurator extends BaseConfigurator
         'extensions' => ExtensionsExtension::class,
         'decorator' => DecoratorExtension::class,
         'slim' => SlimExtension::class,
+        'routes' => RoutesExtension::class,
     ];
 
     protected function createLoader(): Loader

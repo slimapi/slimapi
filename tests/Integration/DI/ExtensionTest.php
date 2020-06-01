@@ -13,7 +13,7 @@ use SlimAPI\Tests\TestCase;
 
 class ExtensionTest extends TestCase
 {
-    public function testServices(): void
+    public function testLoadConfiguration(): void
     {
         $container = self::createContainer(__FIXTURES_DIR__ . '/config.neon');
 

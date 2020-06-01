@@ -27,4 +27,9 @@ class ChainConfigurator implements ApplicationConfigurator
             $configurator->configureApplication($application);
         }
     }
+
+    public function getConfigurators(): array
+    {
+        return $this->configurators;
+    }
 }
