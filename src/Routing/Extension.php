@@ -6,7 +6,7 @@ namespace SlimAPI\Routing;
 
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
-use SlimAPI\Application\ChainConfigurator;
+use SlimAPI\Configurator\ChainConfigurator;
 
 class Extension extends CompilerExtension
 {

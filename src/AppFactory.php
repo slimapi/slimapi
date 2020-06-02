@@ -2,23 +2,24 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Application;
+namespace SlimAPI;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use SlimAPI\Configurator\ConfiguratorInterface;
 
-class ApplicationFactory
+class AppFactory
 {
     private ResponseFactoryInterface $responseFactory;
 
     private ContainerInterface $container;
 
-    private ApplicationConfigurator $configurator;
+    private ConfiguratorInterface $configurator;
 
     public function __construct(
         ResponseFactoryInterface $responseFactory,
         ContainerInterface $container,
-        ApplicationConfigurator $configurator
+        ConfiguratorInterface $configurator
     )
     {
         $this->responseFactory = $responseFactory;
@@ -26,9 +27,9 @@ class ApplicationFactory
         $this->configurator = $configurator;
     }
 
-    public function createApplication(): Application
+    public function createApplication(): App
     {
-        $app = new Application($this->responseFactory, $this->container);
+        $app = new App($this->responseFactory, $this->container);
         $this->configurator->configureApplication($app);
         return $app;
     }

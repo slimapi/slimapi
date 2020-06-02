@@ -2,17 +2,19 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Application;
+namespace SlimAPI\Configurator;
+
+use SlimAPI\App;
 
 /**
  * @link https://github.com/o2ps/SlimNetteBridge/blob/1a594a/src/Application/ChainApplicationConfigurator.php
  */
-class ChainConfigurator implements ApplicationConfigurator
+class ChainConfigurator implements ConfiguratorInterface
 {
-    /** @var ApplicationConfigurator[] */
+    /** @var ConfiguratorInterface[] */
     private array $configurators = [];
 
-    public function addConfigurator(ApplicationConfigurator $configurator, bool $prepend = false): void
+    public function addConfigurator(ConfiguratorInterface $configurator, bool $prepend = false): void
     {
         if ($prepend) {
             array_unshift($this->configurators, $configurator);
@@ -21,7 +23,7 @@ class ChainConfigurator implements ApplicationConfigurator
         }
     }
 
-    public function configureApplication(Application $application): void
+    public function configureApplication(App $application): void
     {
         foreach ($this->configurators as $configurator) {
             $configurator->configureApplication($application);

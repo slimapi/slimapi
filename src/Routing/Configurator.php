@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace SlimAPI\Routing;
 
-use SlimAPI\Application\Application;
-use SlimAPI\Application\ApplicationConfigurator;
+use SlimAPI\App;
+use SlimAPI\Configurator\ConfiguratorInterface;
 use SlimAPI\Exception\LogicException;
 
-class Configurator implements ApplicationConfigurator
+class Configurator implements ConfiguratorInterface
 {
     private array $config;
 
@@ -17,7 +17,7 @@ class Configurator implements ApplicationConfigurator
         $this->config = $config;
     }
 
-    public function configureApplication(Application $application): void
+    public function configureApplication(App $application): void
     {
         $container = $application->getContainer();
         foreach ($this->config as $name => [$method, $pattern, $handler]) {

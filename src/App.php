@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Application;
+namespace SlimAPI;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\App;
+use Slim\App as BaseApp;
 use Slim\ResponseEmitter;
 use SlimAPI\DI\ContainerAdapter;
 
-class Application extends App
+class App extends BaseApp
 {
     public function getContainer(): ContainerAdapter
     {

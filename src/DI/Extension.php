@@ -9,8 +9,8 @@ use Nette\DI\Definitions\Reference;
 use Nette\DI\Definitions\Statement;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Psr7\Factory\ResponseFactory;
-use SlimAPI\Application\ApplicationFactory;
-use SlimAPI\Application\ChainConfigurator;
+use SlimAPI\AppFactory;
+use SlimAPI\Configurator\ChainConfigurator;
 use SlimAPI\Http\RequestFactory;
 use SlimAPI\Http\Response;
 
@@ -63,7 +63,7 @@ class Extension extends CompilerExtension
             ->addSetup(new Statement(ResponseFactory::class . '::$responseClass = ?', [Response::class]));
 
         $builder->addDefinition($this->prefix('applicationFactory'))
-            ->setFactory(ApplicationFactory::class, [$responseFactory, $container, $chainConfigurator]);
+            ->setFactory(AppFactory::class, [$responseFactory, $container, $chainConfigurator]);
 
         $builder->addDefinition($this->prefix('application'))
             ->setFactory($this->prefix('@applicationFactory::createApplication'));

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Tests\Integration\Application;
+namespace SlimAPI\Tests\Integration;
 
-use SlimAPI\Application\Application;
+use SlimAPI\App;
 use SlimAPI\Http\Request;
 use SlimAPI\Http\Response;
 use SlimAPI\Tests\TestCase;
 
-class ApplicationTest extends TestCase
+class AppTest extends TestCase
 {
     public function testRunWithoutRequest(): void
     {
         $container = self::createContainer(__FIXTURES_DIR__ . '/config.neon');
-        $application = $container->getByType(Application::class);
+        $application = $container->getByType(App::class);
 
         $uri = '/application-test';
         $application->get($uri, function (Request $request, Response $response): Response { // phpcs:ignore SlevomatCodingStandard.Functions.StaticClosure

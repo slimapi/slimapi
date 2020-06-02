@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SlimAPI\Tests\Integration\_fixtures;
 
-use SlimAPI\Application\Application;
-use SlimAPI\Application\ApplicationConfigurator;
+use SlimAPI\App;
+use SlimAPI\Configurator\ConfiguratorInterface;
 
-class TestConfiguratorSecond implements ApplicationConfigurator
+class TestConfiguratorSecond implements ConfiguratorInterface
 {
-    public function configureApplication(Application $application): void
+    public function configureApplication(App $application): void
     {
         // just for testing of referenced configurator in _fixtures/config.neon
     }

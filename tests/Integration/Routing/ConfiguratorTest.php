@@ -8,7 +8,7 @@ use Slim\Psr7\Factory\StreamFactory;
 use Slim\Psr7\Factory\UriFactory;
 use Slim\Psr7\Headers;
 use Slim\Routing\Route;
-use SlimAPI\Application\Application;
+use SlimAPI\App;
 use SlimAPI\Exception\LogicException;
 use SlimAPI\Http\Request;
 use SlimAPI\Http\Response;
@@ -19,7 +19,7 @@ class ConfiguratorTest extends TestCase
     public function testConfigureApplicationSuccess(): void
     {
         $container = self::createContainer(__FIXTURES_DIR__ . '/routes_success.neon');
-        $application = $container->getByType(Application::class);
+        $application = $container->getByType(App::class);
 
         $routes = $application->getRouteCollector()->getRoutes();
         if ($routes === []) {
@@ -50,7 +50,7 @@ class ConfiguratorTest extends TestCase
     public function testConfigureApplicationFail(): void
     {
         $container = self::createContainer(__FIXTURES_DIR__ . '/routes_fail.neon');
-        $application = $container->getByType(Application::class);
+        $application = $container->getByType(App::class);
 
         self::expectException(LogicException::class);
         self::expectExceptionMessage('Callback SlimAPI\Tests\Integration\Routing\ConfiguratorTest::actionFail is not callable.');

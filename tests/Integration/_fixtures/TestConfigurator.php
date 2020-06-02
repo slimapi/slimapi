@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace SlimAPI\Tests\Integration\_fixtures;
 
-use SlimAPI\Application\Application;
-use SlimAPI\Application\ApplicationConfigurator;
+use SlimAPI\App;
+use SlimAPI\Configurator\ConfiguratorInterface;
 use SlimAPI\Http\Request;
 use SlimAPI\Http\Response;
 
-class TestConfigurator implements ApplicationConfigurator
+class TestConfigurator implements ConfiguratorInterface
 {
-    public function configureApplication(Application $application): void
+    public function configureApplication(App $application): void
     {
         $application->get('/test-uri-configurator', static function (Request $req, Response $res): Response { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
             return $res->withNoContent();

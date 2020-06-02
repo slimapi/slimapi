@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SlimAPI\Tests\Integration\Routing;
 
-use SlimAPI\Application\ChainConfigurator;
+use SlimAPI\Configurator\ChainConfigurator;
 use SlimAPI\Routing\Configurator;
 use SlimAPI\Tests\TestCase;
 
