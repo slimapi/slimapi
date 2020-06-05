@@ -1,16 +1,16 @@
 includes:
-    - /root/.composer/vendor/phpstan/phpstan-strict-rules/rules.neon
-    - /root/.composer/vendor/phpstan/phpstan-nette/extension.neon
-    - /root/.composer/vendor/phpstan/phpstan-phpunit/extension.neon
-    - /root/.composer/vendor/phpstan/phpstan-phpunit/rules.neon
+  - /root/.composer/vendor/phpstan/phpstan-strict-rules/rules.neon
+  - /root/.composer/vendor/phpstan/phpstan-nette/extension.neon
+  - /root/.composer/vendor/phpstan/phpstan-phpunit/extension.neon
+  - /root/.composer/vendor/phpstan/phpstan-phpunit/rules.neon
 
 parameters:
-    level: 8
-    tmpDir: %currentWorkingDirectory%/tmp
-    checkMissingIterableValueType: false
-    bootstrap: %currentWorkingDirectory%/.phpstan/bootstrap.php
+  level: 8
+  tmpDir: %currentWorkingDirectory%/tmp
+  checkMissingIterableValueType: false
+  bootstrap: %currentWorkingDirectory%/.phpstan/bootstrap.php
 
-    ignoreErrors:
-        -
-            message: '#Constant __FIXTURES_DIR__|__TMP_DIR__ not found.#'
-            path: %currentWorkingDirectory%/tests
+  ignoreErrors:
+    -
+      message: '#Constant __FIXTURES_DIR__|__TMP_DIR__ not found.#'
+      path: %currentWorkingDirectory%/tests

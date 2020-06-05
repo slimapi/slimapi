@@ -26,10 +26,12 @@
         "tracy/tracy": "^2.7"
     },
     "scripts": {
+        "ec": "ec",
         "phpcs": "phpcs",
         "phpcbf": "phpcbf",
-        "tests": "phpunit --no-coverage",
-        "tests-coverage": "phpunit",
-        "phpstan": "phpstan analyse --configuration=/var/www/.phpstan/phpstan.neon src/ tests/"
+        "phpunit": "phpunit --no-coverage",
+        "phpunit-coverage": "phpunit",
+        "phpstan": "phpstan analyse --configuration=/var/www/.phpstan/phpstan.neon src/ tests/",
+        "test": ["@ec", "@phpcs", "@phpstan", "@phpunit-coverage"]
     }
 }

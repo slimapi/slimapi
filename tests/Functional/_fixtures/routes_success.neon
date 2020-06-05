@@ -5,4 +5,4 @@ routes:
     routeName: [POST, /routes-test-2, SlimAPI\Tests\Functional\Routing\ConfiguratorTest::testSuccess]
 
 services:
-    - SlimAPI\Tests\Functional\Routing\ConfiguratorTest
+  - SlimAPI\Tests\Functional\Routing\ConfiguratorTest

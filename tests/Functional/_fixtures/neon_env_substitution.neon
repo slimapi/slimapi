@@ -1,2 +1,2 @@
 parameters:
-    specialParameter: $TEST_ENV
+  specialParameter: $TEST_ENV
