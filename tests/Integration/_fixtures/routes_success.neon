@@ -1,8 +1,0 @@
-slim:
-
-routes:
-    - [GET, /routes-test, SlimAPI\Tests\Integration\Routing\ConfiguratorTest::testSuccess]
-    routeName: [POST, /routes-test-2, SlimAPI\Tests\Integration\Routing\ConfiguratorTest::testSuccess]
-
-services:
-    - SlimAPI\Tests\Integration\Routing\ConfiguratorTest

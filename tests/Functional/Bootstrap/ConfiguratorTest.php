@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Tests\Integration\Bootstrap;
+namespace SlimAPI\Tests\Functional\Bootstrap;
 
 use SlimAPI\Bootstrap\Configurator;
 use SlimAPI\Tests\TestCase;

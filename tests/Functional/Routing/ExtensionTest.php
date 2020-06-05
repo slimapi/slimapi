@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Tests\Integration\Routing;
+namespace SlimAPI\Tests\Functional\Routing;
 
 use SlimAPI\Configurator\ChainConfigurator;
 use SlimAPI\Routing\Configurator;

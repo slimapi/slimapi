@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Tests\Integration;
+namespace SlimAPI\Tests\Functional;
 
 use SlimAPI\App;
 use SlimAPI\Http\Request;

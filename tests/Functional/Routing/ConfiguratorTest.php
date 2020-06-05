@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Tests\Integration\Routing;
+namespace SlimAPI\Tests\Functional\Routing;
 
 use Slim\Psr7\Factory\StreamFactory;
 use Slim\Psr7\Factory\UriFactory;
@@ -53,7 +53,7 @@ class ConfiguratorTest extends TestCase
         $application = $container->getByType(App::class);
 
         self::expectException(LogicException::class);
-        self::expectExceptionMessage('Callback SlimAPI\Tests\Integration\Routing\ConfiguratorTest::actionFail is not callable.');
+        self::expectExceptionMessage('Callback SlimAPI\Tests\Functional\Routing\ConfiguratorTest::actionFail is not callable.');
         $application->handle($this->createRequest('GET', '/routes-test-fail'));
     }
 

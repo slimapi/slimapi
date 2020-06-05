@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Tests\Integration\DI;
+namespace SlimAPI\Tests\Functional\DI;
 
 use SlimAPI\DI\ContainerAdapter;
 use SlimAPI\Http\Request;
