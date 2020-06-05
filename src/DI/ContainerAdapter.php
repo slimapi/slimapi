@@ -62,6 +62,6 @@ class ContainerAdapter implements ContainerInterface
      */
     public function __call(string $name, array $arguments)
     {
-        return $this->container->$name(...$arguments);
+        return $this->container->$name(...$arguments); // @phpstan-ignore-line
     }
 }

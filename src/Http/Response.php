@@ -20,7 +20,7 @@ class Response extends BaseResponse
         $clone = clone $this;
 
         $payload = json_encode($data, $options);
-        $clone->getBody()->write($payload);
+        $clone->getBody()->write($payload); // @phpstan-ignore-line
 
         return $clone
             ->withStatus($status)

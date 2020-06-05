@@ -5,23 +5,12 @@ includes:
     - /root/.composer/vendor/phpstan/phpstan-phpunit/rules.neon
 
 parameters:
-    level: max
+    level: 8
+    tmpDir: %currentWorkingDirectory%/tmp
     checkMissingIterableValueType: false
     bootstrap: %currentWorkingDirectory%/.phpstan/bootstrap.php
 
     ignoreErrors:
         -
-            message: '#Variable method call on Nette\\DI\\Container#'
-            path: %currentWorkingDirectory%/src/DI/ContainerAdapter.php
-
-        -
-            message: '#Parameter \#1 $string of method Psr\Http\Message\StreamInterface::write() expects string, string|false given.#'
-            path: %currentWorkingDirectory%/src/Http/Response.php
-
-        -
             message: '#Constant __FIXTURES_DIR__|__TMP_DIR__ not found.#'
             path: %currentWorkingDirectory%/tests
-
-        -
-            message: '#requestClass has no typehint specified#'
-            path: %currentWorkingDirectory%/src/Http/RequestFactory.php
