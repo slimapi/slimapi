@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace SlimAPI\Tests\Functional\Routing;
 
-use Slim\Psr7\Factory\StreamFactory;
-use Slim\Psr7\Factory\UriFactory;
-use Slim\Psr7\Headers;
 use Slim\Routing\Route;
 use SlimAPI\App;
 use SlimAPI\Exception\LogicException;
@@ -60,17 +57,5 @@ class ConfiguratorTest extends TestCase
     public function actionTestSuccess(Request $request, Response $response): Response
     {
         return $response->withJson(['response-test-success-method' => $request->getMethod()]);
-    }
-
-    private function createRequest(string $method, string $uri): Request
-    {
-        return new Request(
-            $method,
-            (new UriFactory())->createUri($uri),
-            new Headers(),
-            [],
-            [],
-            (new StreamFactory())->createStream(),
-        );
     }
 }

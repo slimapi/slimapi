@@ -11,6 +11,10 @@ use SlimAPI\DI\ContainerAdapter;
 
 class App extends BaseApp
 {
+    /**
+     * Just for code completion.
+     * @return ContainerAdapter
+     */
     public function getContainer(): ContainerAdapter
     {
         /** @var ContainerAdapter $container */

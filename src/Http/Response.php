@@ -9,6 +9,8 @@ use Slim\Psr7\Response as BaseResponse;
 
 class Response extends BaseResponse
 {
+    use Message;
+
     public function write(string $data): self
     {
         $this->getBody()->write($data);

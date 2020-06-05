@@ -8,4 +8,5 @@ use Slim\Psr7\Request as BaseRequest;
 
 class Request extends BaseRequest
 {
+    use Message;
 }
