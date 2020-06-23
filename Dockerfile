@@ -1,7 +1,4 @@
-FROM slimapi/docker:7.4.6
-
-ENV PROJECT_ROOT="/var/www"
-WORKDIR ${PROJECT_ROOT}
+FROM slimapi/nginx-php:7.4.7
 
 ADD .docker /
 ADD . ${PROJECT_ROOT}

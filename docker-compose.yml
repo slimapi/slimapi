@@ -1,8 +1,5 @@
 ---
 version: "3.7"
-networks:
-  app:
-    driver: bridge
 
 services:
   app:
@@ -14,10 +11,5 @@ services:
     ports:
       - "8080:80"
 
-    networks:
-      - app
-
     environment:
       TEST_ENV: test_env_val
-      PHP_OPCACHE: 0
-      PHP_PCOV: 1
