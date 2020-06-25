@@ -23,4 +23,22 @@ class ExtensionTest extends TestCase
         self::assertInstanceOf(ResponseFactory::class, $container->getService('slimapi.responseFactory'));
         self::assertInstanceOf(App::class, $container->getService('slimapi.application'));
     }
+
+    public function testConfigurators(): void
+    {
+        $container = self::createContainer(__FIXTURES_DIR__ . '/config.neon');
+        $chainConfigurator = $container->getByType(ChainConfigurator::class);
+        $configurators = $chainConfigurator->getConfigurators();
+
+        $configuratorsClass = [];
+        foreach ($configurators as $configurator) {
+            $configuratorsClass[] = get_class($configurator);
+        }
+
+        self::assertCount(2, $configuratorsClass);
+        self::assertSame([
+            'SlimAPI\Tests\Functional\_fixtures\TestConfigurator',
+            'SlimAPI\Tests\Functional\_fixtures\TestConfiguratorSecond',
+        ], $configuratorsClass);
+    }
 }
