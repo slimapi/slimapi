@@ -1,7 +1,7 @@
 includes:
   - neon_env_substitution.neon
 
-slim:
+slimapi:
   configurators:
     - SlimAPI\Tests\Functional\_fixtures\TestConfigurator
     - @SlimAPI\Tests\Functional\_fixtures\TestConfiguratorSecond

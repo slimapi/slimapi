@@ -15,9 +15,9 @@ class ContainerAdapterTest extends TestCase
         $container = self::createContainer(__FIXTURES_DIR__ . '/config.neon');
 
         /** @var ContainerAdapter $adapter */
-        $adapter = $container->getService('slim.container');
+        $adapter = $container->getService('slimapi.container');
         self::assertInstanceOf(Request::class, $adapter->get('request'));
         self::assertTrue($adapter->has('request'));
-        self::assertTrue($adapter->hasService('slim.request'));
+        self::assertTrue($adapter->hasService('slimapi.request'));
     }
 }

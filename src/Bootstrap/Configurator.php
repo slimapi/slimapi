@@ -9,7 +9,7 @@ use Nette\DI\Config\Loader;
 use Nette\DI\Extensions\DecoratorExtension;
 use Nette\DI\Extensions\ExtensionsExtension;
 use Nette\DI\Extensions\PhpExtension;
-use SlimAPI\DI\Extension as SlimExtension;
+use SlimAPI\DI\Extension as SlimApiExtension;
 use SlimAPI\DI\NeonAdapter;
 use SlimAPI\Routing\Extension as RoutesExtension;
 
@@ -20,7 +20,7 @@ class Configurator extends BaseConfigurator
         'php' => PhpExtension::class,
         'extensions' => ExtensionsExtension::class,
         'decorator' => DecoratorExtension::class,
-        'slim' => SlimExtension::class,
+        'slimapi' => SlimApiExtension::class,
         'routes' => RoutesExtension::class,
     ];
 

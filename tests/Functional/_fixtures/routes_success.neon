@@ -1,4 +1,4 @@
-slim:
+slimapi:
 
 routes:
     - [GET, /routes-test, SlimAPI\Tests\Functional\Routing\ConfiguratorTest::testSuccess]

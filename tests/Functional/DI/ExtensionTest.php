@@ -17,10 +17,10 @@ class ExtensionTest extends TestCase
     {
         $container = self::createContainer(__FIXTURES_DIR__ . '/config.neon');
 
-        self::assertInstanceOf(ContainerAdapter::class, $container->getService('slim.container'));
-        self::assertInstanceOf(ChainConfigurator::class, $container->getService('slim.chainConfigurator'));
-        self::assertInstanceOf(Request::class, $container->getService('slim.request'));
-        self::assertInstanceOf(ResponseFactory::class, $container->getService('slim.responseFactory'));
-        self::assertInstanceOf(App::class, $container->getService('slim.application'));
+        self::assertInstanceOf(ContainerAdapter::class, $container->getService('slimapi.container'));
+        self::assertInstanceOf(ChainConfigurator::class, $container->getService('slimapi.chainConfigurator'));
+        self::assertInstanceOf(Request::class, $container->getService('slimapi.request'));
+        self::assertInstanceOf(ResponseFactory::class, $container->getService('slimapi.responseFactory'));
+        self::assertInstanceOf(App::class, $container->getService('slimapi.application'));
     }
 }
