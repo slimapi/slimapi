@@ -9,7 +9,6 @@
 /.gitattributes          export-ignore
 /.github                 export-ignore
 /.gitignore              export-ignore
-/.phpstan                export-ignore
 /docker-compose.yml      export-ignore
 /Dockerfile              export-ignore
 /phpcs.xml               export-ignore

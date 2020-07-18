@@ -8,8 +8,6 @@ parameters:
   level: 8
   tmpDir: %currentWorkingDirectory%/tmp
   checkMissingIterableValueType: false
-  bootstrapFiles:
-    - %currentWorkingDirectory%/.phpstan/bootstrap.php
 
   ignoreErrors:
     -

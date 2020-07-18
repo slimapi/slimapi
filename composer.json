@@ -24,11 +24,11 @@
     },
     "scripts": {
         "ec": "ec",
-        "phpcs": "phpcs",
         "phpcbf": "phpcbf",
+        "phpcs": "phpcs",
+        "phpstan": "phpstan --ansi --configuration=phpstan.neon analyse src/ tests/",
         "phpunit": "phpunit --no-coverage",
         "phpunit-coverage": "phpunit",
-        "phpstan": "phpstan analyse --configuration=/var/www/.phpstan/phpstan.neon src/ tests/",
         "test": ["@ec", "@phpcs", "@phpstan", "@phpunit-coverage"]
     }
 }
