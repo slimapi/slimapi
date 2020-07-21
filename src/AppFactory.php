@@ -6,7 +6,9 @@ namespace SlimAPI;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Slim\CallableResolver;
 use SlimAPI\Configurator\ConfiguratorInterface;
+use SlimAPI\Routing\RouteCollector;
 
 class AppFactory
 {
@@ -29,8 +31,13 @@ class AppFactory
 
     public function createApplication(): App
     {
-        $app = new App($this->responseFactory, $this->container);
-        $this->configurator->configureApplication($app);
-        return $app;
+        $callableResolver = new CallableResolver($this->container);
+        $routeCollector = new RouteCollector($this->responseFactory, $callableResolver, $this->container);
+
+        $application = new App($this->responseFactory, $this->container, $callableResolver, $routeCollector);
+        $this->configurator->configureApplication($application);
+        $application->addRoutingMiddleware();
+
+        return $application;
     }
 }

@@ -37,11 +37,24 @@ class ConfiguratorTest extends TestCase
 
         $response = $application->handle(self::createRequestGet('/routes-test'));
         self::assertSame(200, $response->getStatusCode());
-        self::assertSame('{"response-test-success-method":"GET"}', (string) $response->getBody());
+        self::assertSame([
+            'response-test-success-method' => 'GET',
+            'response-test-route-settings' => [
+                'route_settings' => 'foo',
+            ],
+        ], $response->getJson(true));
 
         $response = $application->handle(self::createRequestPost('/routes-test-2', []));
         self::assertSame(200, $response->getStatusCode());
-        self::assertSame('{"response-test-success-method":"POST"}', (string) $response->getBody());
+        self::assertSame([
+            'response-test-success-method' => 'POST',
+            'response-test-route-settings' => [
+                'route_settings' => 'bar',
+                'important-settings' => [
+                    'foo' => 'bar',
+                ],
+            ],
+        ], $response->getJson(true));
     }
 
     public function testConfigureApplicationFail(): void
@@ -56,6 +69,9 @@ class ConfiguratorTest extends TestCase
 
     public function actionTestSuccess(Request $request, Response $response): Response
     {
-        return $response->withJson(['response-test-success-method' => $request->getMethod()]);
+        return $response->withJson([
+            'response-test-success-method' => $request->getMethod(),
+            'response-test-route-settings' => (array) $request->getRoute()->getSettings(),
+        ]);
     }
 }

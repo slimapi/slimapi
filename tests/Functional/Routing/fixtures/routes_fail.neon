@@ -1,5 +1,7 @@
-includes:
-  - routes_success.neon
+slimapi:
 
 routes:
   - [GET, /routes-test-fail, SlimAPI\Tests\Functional\Routing\ConfiguratorTest::fail]
+
+services:
+  - SlimAPI\Tests\Functional\Routing\ConfiguratorTest

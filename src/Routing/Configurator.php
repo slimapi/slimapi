@@ -21,6 +21,7 @@ class Configurator implements ConfiguratorInterface
     {
         $container = $application->getContainer();
         foreach ($this->config as $name => [$method, $pattern, $handler]) {
+            /** @var Route $route */
             $route = $application->map((array) $method, $pattern, function (...$args) use ($container, $handler) { // phpcs:ignore SlevomatCodingStandard.Functions.StaticClosure
                 [$class, $action] = explode('::', $handler);
                 $method = 'action' . ucfirst($action);
@@ -34,6 +35,7 @@ class Configurator implements ConfiguratorInterface
             });
 
             $route->setName((string) $name);
+            $route->setAttribute(RouteContext::ROUTE_SETTINGS, Settings::from($this->config[$name][3] ?? []));
         }
     }
 }

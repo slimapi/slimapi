@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SlimAPI\Tests\Unit\Http;
 
 use JsonException;
+use SlimAPI\Exception\LogicException;
 use SlimAPI\Http\Request;
 use SlimAPI\Http\RequestFactory;
 use SlimAPI\Tests\TestCase;
@@ -29,6 +30,15 @@ class RequestTest extends TestCase
         self::expectException(JsonException::class);
         self::expectExceptionMessage('Syntax error');
         $request->getJson();
+    }
+
+    public function testGetRouteWithoutRoute(): void
+    {
+        $request = $this->createRequest('GET', '/foo/bar');
+
+        self::expectException(LogicException::class);
+        self::expectExceptionMessage('No matched route. Missing call $app->addRoutingMiddleware()?');
+        $request->getRoute();
     }
 
     private function createRequest(string $method = 'GET', string $uri = '/foo/bar', array $serverParams = []): Request
