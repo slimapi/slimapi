@@ -14,9 +14,12 @@ use SlimAPI\Http\Request;
 
 abstract class TestCase extends BaseTestCase
 {
+    protected const CACHE_DIR = __DIR__ . '/../tmp/cache';
+
     public static function cleanup(): void
     {
-        shell_exec(sprintf('rm -rf %s', __TMP_DIR__ . '/cache'));
+        shell_exec(sprintf('rm -rf %s', self::CACHE_DIR));
+        mkdir(self::CACHE_DIR);
     }
 
     protected static function createConfigurator(string $config, bool $debugMode = false): Configurator
@@ -24,7 +27,7 @@ abstract class TestCase extends BaseTestCase
         $configurator = new Configurator();
         $configurator->addConfig($config);
         $configurator->setDebugMode($debugMode);
-        $configurator->setTempDirectory(__TMP_DIR__);
+        $configurator->setTempDirectory(self::CACHE_DIR . '/../');
 
         return $configurator;
     }

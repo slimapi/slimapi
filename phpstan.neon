@@ -8,8 +8,3 @@ parameters:
   level: 8
   tmpDir: %currentWorkingDirectory%/tmp
   checkMissingIterableValueType: false
-
-  ignoreErrors:
-    -
-      message: '#Constant __FIXTURES_DIR__|__TMP_DIR__ not found.#'
-      path: %currentWorkingDirectory%/tests

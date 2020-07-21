@@ -12,7 +12,7 @@ class ExtensionTest extends TestCase
 {
     public function testLoadConfiguration(): void
     {
-        $container = self::createContainer(__FIXTURES_DIR__ . '/routes_success.neon');
+        $container = self::createContainer(__DIR__ . '/fixtures/routes_success.neon');
         self::assertInstanceOf(Configurator::class, $container->getService('routes.configurator'));
 
         $chainConfigurator = $container->getByType(ChainConfigurator::class);

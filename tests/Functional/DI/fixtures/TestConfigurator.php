@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Tests\Functional\_fixtures;
+namespace SlimAPI\Tests\Functional\DI\fixtures;
 
 use SlimAPI\App;
 use SlimAPI\Configurator\ConfiguratorInterface;

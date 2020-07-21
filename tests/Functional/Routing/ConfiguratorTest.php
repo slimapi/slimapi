@@ -15,7 +15,7 @@ class ConfiguratorTest extends TestCase
 {
     public function testConfigureApplicationSuccess(): void
     {
-        $container = self::createContainer(__FIXTURES_DIR__ . '/routes_success.neon');
+        $container = self::createContainer(__DIR__ . '/fixtures/routes_success.neon');
         $application = $container->getByType(App::class);
 
         $routes = $application->getRouteCollector()->getRoutes();
@@ -46,7 +46,7 @@ class ConfiguratorTest extends TestCase
 
     public function testConfigureApplicationFail(): void
     {
-        $container = self::createContainer(__FIXTURES_DIR__ . '/routes_fail.neon');
+        $container = self::createContainer(__DIR__ . '/fixtures/routes_fail.neon');
         $application = $container->getByType(App::class);
 
         self::expectException(LogicException::class);

@@ -12,7 +12,7 @@ class ContainerAdapterTest extends TestCase
 {
     public function testServices(): void
     {
-        $container = self::createContainer(__FIXTURES_DIR__ . '/config.neon');
+        $container = self::createContainer(__DIR__ . '/fixtures/config.neon');
 
         /** @var ContainerAdapter $adapter */
         $adapter = $container->getService('slimapi.container');

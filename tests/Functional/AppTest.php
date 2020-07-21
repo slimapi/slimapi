@@ -13,7 +13,7 @@ class AppTest extends TestCase
 {
     public function testRunWithoutRequest(): void
     {
-        $container = self::createContainer(__FIXTURES_DIR__ . '/config.neon');
+        $container = self::createContainer(__DIR__ . '/DI/fixtures/config.neon');
         $application = $container->getByType(App::class);
 
         $uri = '/application-test';

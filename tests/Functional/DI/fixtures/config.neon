@@ -1,0 +1,10 @@
+includes:
+  - neon_env_substitution.neon
+
+slimapi:
+  configurators:
+    - SlimAPI\Tests\Functional\DI\fixtures\TestConfigurator
+    - @SlimAPI\Tests\Functional\DI\fixtures\TestConfiguratorSecond
+
+services:
+  - SlimAPI\Tests\Functional\DI\fixtures\TestConfiguratorSecond

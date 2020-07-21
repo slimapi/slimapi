@@ -15,7 +15,7 @@ class ExtensionTest extends TestCase
 {
     public function testLoadConfiguration(): void
     {
-        $container = self::createContainer(__FIXTURES_DIR__ . '/config.neon');
+        $container = self::createContainer(__DIR__ . '/fixtures/config.neon');
 
         self::assertInstanceOf(ContainerAdapter::class, $container->getService('slimapi.container'));
         self::assertInstanceOf(ChainConfigurator::class, $container->getService('slimapi.chainConfigurator'));
@@ -26,7 +26,7 @@ class ExtensionTest extends TestCase
 
     public function testConfigurators(): void
     {
-        $container = self::createContainer(__FIXTURES_DIR__ . '/config.neon');
+        $container = self::createContainer(__DIR__ . '/fixtures/config.neon');
         $chainConfigurator = $container->getByType(ChainConfigurator::class);
         $configurators = $chainConfigurator->getConfigurators();
 
@@ -37,8 +37,8 @@ class ExtensionTest extends TestCase
 
         self::assertCount(2, $configuratorsClass);
         self::assertSame([
-            'SlimAPI\Tests\Functional\_fixtures\TestConfigurator',
-            'SlimAPI\Tests\Functional\_fixtures\TestConfiguratorSecond',
+            'SlimAPI\Tests\Functional\DI\fixtures\TestConfigurator',
+            'SlimAPI\Tests\Functional\DI\fixtures\TestConfiguratorSecond',
         ], $configuratorsClass);
     }
 }

@@ -14,7 +14,7 @@ class NeonAdapterTest extends TestCase
         $adapter = new NeonAdapter();
         self::assertSame(
             'test_env_val',
-            $adapter->load(__FIXTURES_DIR__ . '/neon_env_substitution.neon')['parameters']['specialParameter'],
+            $adapter->load(__DIR__ . '/fixtures/neon_env_substitution.neon')['parameters']['specialParameter'],
         );
     }
 
