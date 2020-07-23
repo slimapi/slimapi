@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace SlimAPI\Tests\Unit\Http;
 
 use JsonException;
+use SlimAPI\Http\Request;
+use SlimAPI\Http\RequestFactory;
 use SlimAPI\Tests\TestCase;
 
 class RequestTest extends TestCase
@@ -27,5 +29,12 @@ class RequestTest extends TestCase
         self::expectException(JsonException::class);
         self::expectExceptionMessage('Syntax error');
         $request->getJson();
+    }
+
+    private function createRequest(string $method = 'GET', string $uri = '/foo/bar', array $serverParams = []): Request
+    {
+        /** @var Request $request */
+        $request = (new RequestFactory())->createServerRequest($method, $uri, $serverParams);
+        return $request;
     }
 }

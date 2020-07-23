@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace SlimAPI\Tests\Functional\DI;
 
 use SlimAPI\DI\NeonAdapter;
-use SlimAPI\Tests\TestCase;
+use SlimAPI\Tests\Functional\TestCase;
 
 class NeonAdapterTest extends TestCase
 {

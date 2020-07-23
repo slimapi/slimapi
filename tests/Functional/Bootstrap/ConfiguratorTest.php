@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SlimAPI\Tests\Functional\Bootstrap;
 
-use SlimAPI\Tests\TestCase;
+use SlimAPI\Tests\Functional\TestCase;
 
 class ConfiguratorTest extends TestCase
 {

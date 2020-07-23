@@ -6,7 +6,7 @@ namespace SlimAPI\Tests\Functional\DI;
 
 use SlimAPI\DI\ContainerAdapter;
 use SlimAPI\Http\Request;
-use SlimAPI\Tests\TestCase;
+use SlimAPI\Tests\Functional\TestCase;
 
 class ContainerAdapterTest extends TestCase
 {

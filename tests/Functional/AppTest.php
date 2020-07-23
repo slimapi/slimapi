@@ -7,7 +7,6 @@ namespace SlimAPI\Tests\Functional;
 use SlimAPI\App;
 use SlimAPI\Http\Request;
 use SlimAPI\Http\Response;
-use SlimAPI\Tests\TestCase;
 
 class AppTest extends TestCase
 {

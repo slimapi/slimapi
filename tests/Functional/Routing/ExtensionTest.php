@@ -6,7 +6,7 @@ namespace SlimAPI\Tests\Functional\Routing;
 
 use SlimAPI\Configurator\ChainConfigurator;
 use SlimAPI\Routing\Configurator;
-use SlimAPI\Tests\TestCase;
+use SlimAPI\Tests\Functional\TestCase;
 
 class ExtensionTest extends TestCase
 {

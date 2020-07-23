@@ -9,7 +9,7 @@ use SlimAPI\App;
 use SlimAPI\Exception\LogicException;
 use SlimAPI\Http\Request;
 use SlimAPI\Http\Response;
-use SlimAPI\Tests\TestCase;
+use SlimAPI\Tests\Functional\TestCase;
 
 class ConfiguratorTest extends TestCase
 {
@@ -35,11 +35,11 @@ class ConfiguratorTest extends TestCase
         self::assertSame('/routes-test-2', $second->getPattern());
         self::assertSame('routeName', $second->getName());
 
-        $response = $application->handle($this->createRequest('GET', '/routes-test'));
+        $response = $application->handle(self::createRequestGet('/routes-test'));
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('{"response-test-success-method":"GET"}', (string) $response->getBody());
 
-        $response = $application->handle($this->createRequest('POST', '/routes-test-2'));
+        $response = $application->handle(self::createRequestPost('/routes-test-2', []));
         self::assertSame(200, $response->getStatusCode());
         self::assertSame('{"response-test-success-method":"POST"}', (string) $response->getBody());
     }
@@ -51,7 +51,7 @@ class ConfiguratorTest extends TestCase
 
         self::expectException(LogicException::class);
         self::expectExceptionMessage('Callback SlimAPI\Tests\Functional\Routing\ConfiguratorTest::actionFail is not callable.');
-        $application->handle($this->createRequest('GET', '/routes-test-fail'));
+        $application->handle(self::createRequestGet('/routes-test-fail'));
     }
 
     public function actionTestSuccess(Request $request, Response $response): Response

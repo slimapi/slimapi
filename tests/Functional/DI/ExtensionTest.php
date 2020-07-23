@@ -9,7 +9,7 @@ use SlimAPI\App;
 use SlimAPI\Configurator\ChainConfigurator;
 use SlimAPI\DI\ContainerAdapter;
 use SlimAPI\Http\Request;
-use SlimAPI\Tests\TestCase;
+use SlimAPI\Tests\Functional\TestCase;
 
 class ExtensionTest extends TestCase
 {
