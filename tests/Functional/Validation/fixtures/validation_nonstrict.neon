@@ -1,0 +1,5 @@
+includes:
+  - validation.neon
+
+parameters:
+  strictValidation: false

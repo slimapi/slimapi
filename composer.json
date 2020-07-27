@@ -17,10 +17,13 @@
         "ext-json": "*",
         "nette/bootstrap": "^3.0",
         "slim/slim": "^4.5",
-        "slimapi/psr7": "^1.1"
+        "slimapi/psr7": "^1.1",
+        "justinrainbow/json-schema": "^5.2"
     },
     "require-dev": {
-        "tracy/tracy": "^2.7"
+        "tracy/tracy": "^2.7",
+        "symfony/console": "^5.1",
+        "adriansuter/php-autoload-override": "^1.2"
     },
     "scripts": {
         "ec": "ec",

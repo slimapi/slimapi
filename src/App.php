@@ -10,15 +10,12 @@ use Slim\ResponseEmitter;
 use SlimAPI\DI\ContainerAdapter;
 use SlimAPI\Http\Response;
 
+/**
+ * @method ContainerAdapter getContainer()
+ * @method Response handle(ServerRequestInterface $request)
+ */
 class App extends BaseApp
 {
-    public function getContainer(): ContainerAdapter
-    {
-        /** @var ContainerAdapter $container */
-        $container = parent::getContainer(); // just for code completion
-        return $container;
-    }
-
     public function run(?ServerRequestInterface $request = null): void
     {
         if ($request === null) {
@@ -28,12 +25,5 @@ class App extends BaseApp
         $response = $this->handle($request);
         $responseEmitter = new ResponseEmitter();
         $responseEmitter->emit($response);
-    }
-
-    public function handle(ServerRequestInterface $request): Response
-    {
-        /** @var Response $response */
-        $response = parent::handle($request); // just for code completion
-        return $response;
     }
 }

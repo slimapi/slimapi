@@ -18,7 +18,7 @@ class TestCase extends BaseTestCase
         $configurator = new Configurator();
         $configurator->addConfig($config);
         $configurator->setDebugMode($debugMode);
-        $configurator->setTempDirectory(self::CACHE_DIR . '/../');
+        $configurator->setTempDirectory(self::CACHE_DIR . '/..');
 
         return $configurator;
     }

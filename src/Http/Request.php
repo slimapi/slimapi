@@ -4,14 +4,22 @@ declare(strict_types=1);
 
 namespace SlimAPI\Http;
 
+use Psr\Http\Message\StreamInterface;
 use Slim\Psr7\Request as BaseRequest;
 use Slim\Routing\RouteContext;
 use SlimAPI\Exception\LogicException;
 use SlimAPI\Routing\Route;
 
+/**
+ * @method Request withAttribute(string $name, mixed $value)
+ * @method Request withBody(StreamInterface $body)
+ * @method Request withHeader(string $name, mixed $value)
+ */
 class Request extends BaseRequest
 {
     use Message;
+
+    public const ATTRIBUTE_VALIDATION_SCHEMA = '__validation__';
 
     public function getRoute(): Route
     {
@@ -21,5 +29,10 @@ class Request extends BaseRequest
         }
 
         return $route;
+    }
+
+    public function getValidationSchema(): array
+    {
+        return $this->getAttribute(self::ATTRIBUTE_VALIDATION_SCHEMA, []);
     }
 }

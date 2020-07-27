@@ -13,10 +13,8 @@ class ResponseTest extends TestCase
     public function testGetJson(): void
     {
         $response = (new Response());
-        self::assertNull($response->getJson());
-
         $response->getBody()->write('{"foo":"bar"}');
-        self::assertSame(['foo' => 'bar'], $response->getJson()); // @phpstan-ignore-line
+        self::assertSame(['foo' => 'bar'], $response->getJson());
         self::assertEquals((object) ['foo' => 'bar'], $response->getJson(false));
     }
 
@@ -54,5 +52,17 @@ class ResponseTest extends TestCase
             $cloned->withStatus(204),
             $response->withNoContent(),
         );
+    }
+
+    public function testIsOk(): void
+    {
+        $response = (new Response())->withStatus(200);
+        self::assertTrue($response->isOk());
+    }
+
+    public function testIsSuccessful(): void
+    {
+        $response = (new Response())->withStatus(201);
+        self::assertTrue($response->isSuccessful());
     }
 }

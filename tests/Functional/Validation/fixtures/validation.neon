@@ -1,0 +1,28 @@
+parameters:
+  strictValidation: true
+
+slimapi:
+  configurators:
+    - @SlimAPI\Validation\Configurator
+
+routes:
+  - [GET, /foo/v1/bar, SlimAPI\Tests\Functional\Validation\Middleware\RequestMiddlewareTest::handlerFoo]
+  - [POST, /foo/v1/bar, SlimAPI\Tests\Functional\Validation\Middleware\RequestMiddlewareTest::handlerFoo]
+  - [PUT, /foo/v1/missing-schema, SlimAPI\Tests\Functional\Validation\Middleware\RequestMiddlewareTest::handlerFoo]
+  - [DELETE, /foo/v1/bar, SlimAPI\Tests\Functional\Validation\Middleware\RequestMiddlewareTest::handlerFoo, {validation_mapper: false}]
+
+  - [GET, /bar/v1/foo, SlimAPI\Tests\Functional\Validation\Middleware\ResponseMiddlewareTest::handlerBar, {validation_mapper: '[GET]/bar/v1/foo{?filter}'}]
+  - [PUT, /bar/v1/foo, SlimAPI\Tests\Functional\Validation\Middleware\ResponseMiddlewareTest::handlerBar]
+  - [GET, /bar/v1/fail, SlimAPI\Tests\Functional\Validation\Middleware\ResponseMiddlewareTest::handlerBar]
+  - [GET, /bar/v1/skip, SlimAPI\Tests\Functional\Validation\Middleware\ResponseMiddlewareTest::handlerBar]
+  - [GET, /bar/v1/error, SlimAPI\Tests\Functional\Validation\Middleware\ResponseMiddlewareTest::handlerBar]
+
+services:
+  - SlimAPI\Tests\Functional\Validation\Middleware\RequestMiddlewareTest
+  - SlimAPI\Tests\Functional\Validation\Middleware\ResponseMiddlewareTest
+
+  - SlimAPI\Validation\Factory(%appDir%/Validation/fixtures/*.json, %tempDir%/cache, %strictValidation%)
+
+  -
+    class: SlimAPI\Validation\Configurator
+    factory: @SlimAPI\Validation\Factory::createConfigurator()

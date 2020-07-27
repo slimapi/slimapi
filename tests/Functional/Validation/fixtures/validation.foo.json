@@ -1,0 +1,75 @@
+{
+    "[GET]/foo/v1/bar": [
+        {
+            "meta": {
+                "title": null,
+                "type": "response"
+            },
+            "schema": {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "properties": {
+                    "method": {
+                        "type": "string"
+                    },
+                    "pattern": {
+                        "type": "string"
+                    },
+                    "validation": {
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "method",
+                    "pattern",
+                    "validation"
+                ],
+                "type": "object"
+            }
+        }
+    ],
+    "[POST]/foo/v1/bar": [
+        {
+            "meta": {
+                "title": "",
+                "type": "request"
+            },
+            "schema": {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "properties": {
+                    "id": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "id"
+                ]
+            }
+        },
+        {
+            "meta": {
+                "title": null,
+                "type": "response"
+            },
+            "schema": {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "properties": {
+                    "method": {
+                        "type": "string"
+                    },
+                    "pattern": {
+                        "type": "string"
+                    },
+                    "validation": {
+                        "type": "array"
+                    }
+                },
+                "required": [
+                    "method",
+                    "pattern",
+                    "validation"
+                ],
+                "type": "object"
+            }
+        }
+    ]
+}
