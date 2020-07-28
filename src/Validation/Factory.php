@@ -8,11 +8,11 @@ use SlimAPI\Validation\Validator\JsonSchemaValidator;
 
 class Factory
 {
-    protected string $sourceMask;
+    private string $sourceMask;
 
-    protected string $outputDir;
+    private string $outputDir;
 
-    protected bool $strict;
+    private bool $strict;
 
     /**
      * @param string $sourceMask The path where validation schema *.JSON files are stored

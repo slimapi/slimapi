@@ -13,7 +13,7 @@ class TestConfigurator implements ConfiguratorInterface
 {
     public function configureApplication(App $application): void
     {
-        $application->get('/test-uri-configurator', static function (Request $req, Response $res): Response { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter
+        $application->get('/test-uri-configurator', static function (Request $req, Response $res): Response {
             return $res->withNoContent();
         });
     }
