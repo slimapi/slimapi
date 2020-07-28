@@ -3,17 +3,17 @@
 
 # Exclude unused files
 # see: https://redd.it/2jzp6k
-/.docker                 export-ignore
-/.dockerignore           export-ignore
-/.editorconfig           export-ignore
-/.gitattributes          export-ignore
-/.github                 export-ignore
-/.gitignore              export-ignore
-/docker-compose.yml      export-ignore
-/Dockerfile              export-ignore
-/phpcs.xml               export-ignore
-/phpunit.xml             export-ignore
-/public                  export-ignore
-/README.md               export-ignore
-/tests                   export-ignore
-/tmp                     export-ignore
+.docker                 export-ignore
+.dockerignore           export-ignore
+.editorconfig           export-ignore
+.gitattributes          export-ignore
+.github                 export-ignore
+.gitignore              export-ignore
+Dockerfile              export-ignore
+docker-compose.yml      export-ignore
+phpcs.xml               export-ignore
+phpstan.neon            export-ignore
+phpunit.xml             export-ignore
+public                  export-ignore
+tests                   export-ignore
+tmp                     export-ignore
