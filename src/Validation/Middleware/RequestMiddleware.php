@@ -15,6 +15,11 @@ use SlimAPI\Validation\Validator\ValidatorInterface;
 
 class RequestMiddleware extends Middleware
 {
+    protected function requestToSchemaName(Request $request): string
+    {
+        return sprintf('[%s]%s', $request->getMethod(), $request->getRoute()->getPattern());
+    }
+
     public function __invoke(Request $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $mapper = $request->getRoute()->getSettings()->getValidationMapper();
@@ -38,17 +43,21 @@ class RequestMiddleware extends Middleware
             return $handler->handle($request);
         }
 
+        if ((string) $request->getBody() === '') {
+            throw new HttpBadRequestException($request, 'Missing request body.');
+        }
+
         if ($request->getMediaType() !== ValidatorInterface::CONTENT_TYPE) {
             throw new HttpBadRequestException(
                 $request,
-                sprintf('Accepted content-type is %s only.', ValidatorInterface::CONTENT_TYPE),
+                sprintf("Supported content-type is '%s' only.", ValidatorInterface::CONTENT_TYPE),
             );
         }
 
         try {
             $body = $request->getJson(false);
         } catch (JsonException $e) {
-            throw new HttpBadRequestException($request, 'Missing or bad request body.', $e);
+            throw new HttpBadRequestException($request, 'Bad request body.', $e);
         }
 
         if ($this->validator->isValid($body, $schema[0]->schema) === false) {
@@ -56,10 +65,5 @@ class RequestMiddleware extends Middleware
         }
 
         return $handler->handle($request);
-    }
-
-    protected function requestToSchemaName(Request $request): string
-    {
-        return sprintf('[%s]%s', $request->getMethod(), $request->getRoute()->getPattern());
     }
 }

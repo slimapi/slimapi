@@ -79,17 +79,16 @@ class RequestMiddlewareTest extends TestCase
         $request = $request->withHeader('Content-Type', 'text/plain');
 
         self::expectException(HttpBadRequestException::class);
-        self::expectExceptionMessage('Accepted content-type is application/json only.');
+        self::expectExceptionMessage("Supported content-type is 'application/json' only.");
         self::$application->handle($request);
     }
 
     public function testMissingRequestBody(): void
     {
         $request = self::createRequest('POST', '/foo/v1/bar');
-        $request = $request->withHeader('Content-Type', 'application/json');
 
         self::expectException(HttpBadRequestException::class);
-        self::expectExceptionMessage('Missing or bad request body');
+        self::expectExceptionMessage('Missing request body');
         self::$application->handle($request);
     }
 
@@ -102,7 +101,7 @@ class RequestMiddlewareTest extends TestCase
         $request = $request->withHeader('Content-Type', 'application/json');
 
         self::expectException(HttpBadRequestException::class);
-        self::expectExceptionMessage('Missing or bad request body');
+        self::expectExceptionMessage('Bad request body');
         self::$application->handle($request);
     }
 
