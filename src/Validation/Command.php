@@ -12,15 +12,6 @@ class Command extends BaseCommand
 {
     private ?Generator $generator = null;
 
-    protected function configure(): void
-    {
-        $this
-            ->setName('validation:generate')
-            ->setDescription('Generate validation schema cache-file for application.');
-
-        parent::configure();
-    }
-
     public function setGenerator(Generator $generator): self
     {
         $this->generator = $generator;
@@ -41,5 +32,14 @@ class Command extends BaseCommand
         ));
 
         return 0;
+    }
+
+    protected function configure(): void
+    {
+        $this
+            ->setName('validation:generate')
+            ->setDescription('Generate validation schema cache-file for application.');
+
+        parent::configure();
     }
 }

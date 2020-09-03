@@ -18,14 +18,6 @@ class RequestMiddlewareTest extends TestCase
     /** @var App */
     protected static App $application;
 
-    public static function setUpBeforeClass(): void
-    {
-        self::cleanup();
-
-        $container = self::createContainer(__DIR__ . '/../fixtures/validation.neon');
-        self::$application = $container->getByType(App::class);
-    }
-
     public function testValidationSuccess(): void
     {
         $response = self::$application->handle(self::createRequestPost('/foo/v1/bar', ['id' => 123], []));
@@ -115,5 +107,13 @@ class RequestMiddlewareTest extends TestCase
         ]);
 
         return $response;
+    }
+
+    public static function setUpBeforeClass(): void
+    {
+        self::cleanup();
+
+        $container = self::createContainer(__DIR__ . '/../fixtures/validation.neon');
+        self::$application = $container->getByType(App::class);
     }
 }

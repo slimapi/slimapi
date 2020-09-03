@@ -22,9 +22,9 @@ use Psr\Container\ContainerInterface;
  */
 class ContainerAdapter implements ContainerInterface
 {
-    private string $prefix;
-
     public Container $container;
+
+    private string $prefix;
 
     public function __construct(string $prefix, Container $container)
     {
