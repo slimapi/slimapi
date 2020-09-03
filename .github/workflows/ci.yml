@@ -1,0 +1,40 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+jobs:
+  pipeline:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Enable Docker Layer Caching
+        uses: satackey/action-docker-layer-caching@v0.0.8
+        continue-on-error: true
+
+      - name: Build Docker Image
+        run: docker build --tag $GITHUB_SHA .
+
+      - name: Start Docker Container
+        run: docker run --env ENVIRONMENT=ci --env TEST_ENV=test_env_val --detach --name=$GITHUB_SHA $GITHUB_SHA
+
+      - name: EditorConfig-Checker
+        run: docker exec $GITHUB_SHA ec
+
+      - name: PHP_CodeSniffer
+        run: docker exec $GITHUB_SHA phpcs
+
+      - name: PHPStan
+        run: docker exec $GITHUB_SHA composer phpstan
+
+      - name: PHPUnit
+        run: |
+          docker exec $GITHUB_SHA phpunit --coverage-clover coverage.xml
+          docker exec $GITHUB_SHA cat coverage.xml > coverage.xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true

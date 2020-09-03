@@ -1,5 +1,10 @@
 #!/usr/bin/with-contenv bash
 
+if [ "$ENVIRONMENT" != "dev" ]; then
+    echo "** Skipping an application init **"
+    exit 0
+fi
+
 echo "** Copying global composer vendor for code completion **"
 cp -r /root/.composer/vendor /var/www/vendor-global
 
