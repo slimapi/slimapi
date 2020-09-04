@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Validation;
+namespace SlimAPI\Validation\Generator;
 
 use SlimAPI\Exception\InvalidArgumentException;
 
-class Generator
+class DefaultGenerator implements GeneratorInterface
 {
     private string $sourceMask;
 

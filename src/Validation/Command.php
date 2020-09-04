@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SlimAPI\Validation;
 
+use SlimAPI\Validation\Generator\GeneratorInterface as Generator;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

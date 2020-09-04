@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SlimAPI\Validation;
 
+use SlimAPI\Validation\Generator\DefaultGenerator;
 use SlimAPI\Validation\Validator\JsonSchemaValidator;
 
 class Factory
@@ -26,9 +27,9 @@ class Factory
         $this->strict = $strict;
     }
 
-    public function createGenerator(): Generator
+    public function createGenerator(): DefaultGenerator
     {
-        return new Generator($this->sourceMask, $this->outputDir);
+        return new DefaultGenerator($this->sourceMask, $this->outputDir);
     }
 
     public function createConfigurator(): Configurator

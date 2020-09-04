@@ -6,7 +6,7 @@ namespace SlimAPI\Tests\Functional\Validation;
 
 use SlimAPI\Tests\TestCase;
 use SlimAPI\Validation\Command;
-use SlimAPI\Validation\Generator;
+use SlimAPI\Validation\Generator\DefaultGenerator;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class CommandTest extends TestCase
@@ -14,7 +14,7 @@ class CommandTest extends TestCase
     public function testExecute(): void
     {
         self::cleanup();
-        $generator = new Generator(__DIR__ . '/fixtures/validation.bar.json', self::CACHE_DIR);
+        $generator = new DefaultGenerator(__DIR__ . '/fixtures/validation.bar.json', self::CACHE_DIR);
 
         $command = new Command();
         $command->setGenerator($generator);

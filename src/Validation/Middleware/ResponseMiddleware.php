@@ -9,7 +9,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use SlimAPI\Http\Request;
 use SlimAPI\Http\Response;
 use SlimAPI\Validation\Exception\ResponseException;
-use SlimAPI\Validation\Validator\ValidatorInterface;
+use SlimAPI\Validation\Validator\ValidatorInterface as Validator;
 
 class ResponseMiddleware extends Middleware
 {
@@ -28,10 +28,10 @@ class ResponseMiddleware extends Middleware
             return $response;
         }
 
-        if ($response->getMediaType() === ValidatorInterface::CONTENT_TYPE) {
+        if ($response->getMediaType() === Validator::CONTENT_TYPE) {
             $schema = $request->getValidationSchema();
             foreach ($schema as $item) {
-                if ($item->meta->type !== ValidatorInterface::TYPE_RESPONSE) {
+                if ($item->meta->type !== Validator::TYPE_RESPONSE) {
                     continue;
                 }
 
