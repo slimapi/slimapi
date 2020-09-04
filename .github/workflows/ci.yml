@@ -25,13 +25,13 @@ jobs:
         run: docker build --tag $GITHUB_SHA .
 
       - name: Start Docker Container
-        run: docker run --env ENVIRONMENT=ci --env TEST_ENV=test_env_val --detach --name=$GITHUB_SHA $GITHUB_SHA
+        run: docker run --detach --env ENVIRONMENT=ci --env TEST_ENV=test_env_val --name=$GITHUB_SHA $GITHUB_SHA
 
       - name: EditorConfig-Checker
-        run: docker exec $GITHUB_SHA ec
+        run: docker exec $GITHUB_SHA composer ec
 
       - name: PHP_CodeSniffer
-        run: docker exec $GITHUB_SHA phpcs
+        run: docker exec $GITHUB_SHA composer phpcs
 
       - name: PHPStan
         run: docker exec $GITHUB_SHA composer phpstan
