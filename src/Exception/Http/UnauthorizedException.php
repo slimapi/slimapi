@@ -9,11 +9,11 @@ use Throwable;
 
 class UnauthorizedException extends Exception
 {
-    private const DEFAULT_CHALLENGE = 'Bearer';
-
-    public function __construct(string $message, string $challenge = self::DEFAULT_CHALLENGE, ?Throwable $previous = null)
+    public function __construct(string $message, ?string $authenticate = null, ?Throwable $previous = null)
     {
-        $headers = ['WWW-Authenticate' => $challenge];
+        $headers = $authenticate === null
+            ? []
+            : ['WWW-Authenticate' => $authenticate]; // @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate
 
         parent::__construct($message, StatusCodeInterface::STATUS_UNAUTHORIZED, null, $headers, $previous);
     }
