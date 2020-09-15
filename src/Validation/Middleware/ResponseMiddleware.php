@@ -36,7 +36,7 @@ class ResponseMiddleware extends Middleware
                 }
 
                 if ($this->validator->isValid($response->getJson(false), $item->schema) === false) {
-                    throw new ResponseException($request, $this->validator);
+                    throw new ResponseException($this->validator);
                 }
 
                 break; // validates only by first response validation schema

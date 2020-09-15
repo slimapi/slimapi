@@ -1,17 +1,20 @@
 <?php
 
-/** phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint */
-
 declare(strict_types=1);
 
 namespace SlimAPI\Exception\Http;
 
-use Slim\Exception\HttpSpecializedException;
+use Fig\Http\Message\StatusCodeInterface;
+use Throwable;
 
-class UnprocessableEntityException extends HttpSpecializedException
+class UnprocessableEntityException extends Exception
 {
-    protected $code = 422;
-    protected $message = 'Unprocessable entity.';
-    protected $title = '422 Unprocessable Entity';
-    protected $description = 'The server understands the request, but it was unable to process the contained instructions.';
+    public function __construct(string $error, ?string $message = null, ?Throwable $previous = null)
+    {
+        if ($message === null) {
+            $message = ucfirst(strtolower(str_replace('_', ' ', $error)));
+        }
+
+        parent::__construct($message, StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $error, [], $previous);
+    }
 }

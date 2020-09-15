@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace SlimAPI\Tests\Functional\Validation\Middleware;
 
-use Slim\Exception\HttpBadRequestException;
 use Slim\Psr7\Factory\StreamFactory;
 use SlimAPI\App;
+use SlimAPI\Exception\Http\BadRequestException;
 use SlimAPI\Exception\LogicException;
 use SlimAPI\Http\Request;
 use SlimAPI\Http\Response;
@@ -32,6 +32,7 @@ class RequestMiddlewareTest extends TestCase
     {
         self::expectException(RequestException::class);
         self::expectExceptionMessage('[{"id":"String value found, but a number is required"}]');
+        self::expectExceptionCode(400);
         self::$application->handle(self::createRequestPost('/foo/v1/bar', ['id' => 'not-type-number'], []));
     }
 
@@ -70,8 +71,9 @@ class RequestMiddlewareTest extends TestCase
         $request = $request->withBody($body);
         $request = $request->withHeader('Content-Type', 'text/plain');
 
-        self::expectException(HttpBadRequestException::class);
+        self::expectException(BadRequestException::class);
         self::expectExceptionMessage("Supported content-type is 'application/json' only.");
+        self::expectExceptionCode(400);
         self::$application->handle($request);
     }
 
@@ -79,8 +81,9 @@ class RequestMiddlewareTest extends TestCase
     {
         $request = self::createRequest('POST', '/foo/v1/bar');
 
-        self::expectException(HttpBadRequestException::class);
-        self::expectExceptionMessage('Missing request body');
+        self::expectException(BadRequestException::class);
+        self::expectExceptionMessage('Missing request body.');
+        self::expectExceptionCode(400);
         self::$application->handle($request);
     }
 
@@ -92,8 +95,9 @@ class RequestMiddlewareTest extends TestCase
         $request = $request->withBody($body);
         $request = $request->withHeader('Content-Type', 'application/json');
 
-        self::expectException(HttpBadRequestException::class);
-        self::expectExceptionMessage('Bad request body');
+        self::expectException(BadRequestException::class);
+        self::expectExceptionMessage('Bad request body.');
+        self::expectExceptionCode(400);
         self::$application->handle($request);
     }
 

@@ -8,8 +8,3 @@ parameters:
   level: 8
   tmpDir: %currentWorkingDirectory%/tmp
   checkMissingIterableValueType: false
-
-  ignoreErrors:
-      -
-          message: '#Property .* has no typehint specified.#'
-          path: %currentWorkingDirectory%/src/Exception/Http/*.php

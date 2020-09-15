@@ -33,6 +33,7 @@ class ResponseMiddlewareTest extends TestCase
             'The property pattern is not defined and the definition does not allow additional properties',
             'The property query is not defined and the definition does not allow additional properties',
         ));
+        self::expectExceptionCode(500);
         self::$application->handle(self::createRequestGet('/bar/v1/fail'));
     }
 

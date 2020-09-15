@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace SlimAPI\Validation\Exception;
 
-use Slim\Exception\HttpBadRequestException;
-use SlimAPI\Http\Request;
-use SlimAPI\Validation\Validator\ValidatorInterface;
+use Fig\Http\Message\StatusCodeInterface;
 
-class RequestException extends HttpBadRequestException
+class RequestException extends Exception
 {
-    public function __construct(Request $request, ValidatorInterface $validator)
-    {
-        parent::__construct($request, $validator->generateErrorMessage());
-    }
+    protected int $defaultCode = StatusCodeInterface::STATUS_BAD_REQUEST;
 }

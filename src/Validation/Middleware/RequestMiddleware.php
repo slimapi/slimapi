@@ -7,7 +7,7 @@ namespace SlimAPI\Validation\Middleware;
 use JsonException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Exception\HttpBadRequestException;
+use SlimAPI\Exception\Http\BadRequestException;
 use SlimAPI\Exception\LogicException;
 use SlimAPI\Http\Request;
 use SlimAPI\Validation\Exception\RequestException;
@@ -44,24 +44,21 @@ class RequestMiddleware extends Middleware
         }
 
         if ((string) $request->getBody() === '') {
-            throw new HttpBadRequestException($request, 'Missing request body.');
+            throw new BadRequestException('Missing request body.');
         }
 
         if ($request->getMediaType() !== ValidatorInterface::CONTENT_TYPE) {
-            throw new HttpBadRequestException(
-                $request,
-                sprintf("Supported content-type is '%s' only.", ValidatorInterface::CONTENT_TYPE),
-            );
+            throw new BadRequestException(sprintf("Supported content-type is '%s' only.", ValidatorInterface::CONTENT_TYPE));
         }
 
         try {
             $body = $request->getJson(false);
         } catch (JsonException $e) {
-            throw new HttpBadRequestException($request, 'Bad request body.', $e);
+            throw new BadRequestException('Bad request body.', $e);
         }
 
         if ($this->validator->isValid($body, $schema[0]->schema) === false) {
-            throw new RequestException($request, $this->validator);
+            throw new RequestException($this->validator);
         }
 
         return $handler->handle($request);
