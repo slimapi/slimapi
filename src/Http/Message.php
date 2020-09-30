@@ -17,7 +17,7 @@ trait Message
      * @return mixed
      * @throws JsonException
      */
-    public function getJson(bool $assoc = true, int $depth = 512, int $options = JSON_THROW_ON_ERROR)
+    public function getJson(bool $assoc = false, int $depth = 512, int $options = JSON_THROW_ON_ERROR)
     {
         return json_decode((string) $this->body, $assoc, $depth, $options);
     }

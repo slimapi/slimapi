@@ -16,8 +16,8 @@ class RequestTest extends TestCase
     {
         $request = $this->createRequest();
         $request->getBody()->write('{"foo":"bar"}');
-        self::assertSame(['foo' => 'bar'], $request->getJson());
-        self::assertEquals((object) ['foo' => 'bar'], $request->getJson(false));
+        self::assertSame(['foo' => 'bar'], $request->getJson(true));
+        self::assertEquals((object) ['foo' => 'bar'], $request->getJson());
     }
 
     public function testGetJsonError(): void

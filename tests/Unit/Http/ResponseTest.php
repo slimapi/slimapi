@@ -14,8 +14,8 @@ class ResponseTest extends TestCase
     {
         $response = (new Response());
         $response->getBody()->write('{"foo":"bar"}');
-        self::assertSame(['foo' => 'bar'], $response->getJson());
-        self::assertEquals((object) ['foo' => 'bar'], $response->getJson(false));
+        self::assertSame(['foo' => 'bar'], $response->getJson(true));
+        self::assertEquals((object) ['foo' => 'bar'], $response->getJson());
     }
 
     public function testGetJsonError(): void
