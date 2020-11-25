@@ -7,6 +7,7 @@ namespace SlimAPI;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App as BaseApp;
 use Slim\ResponseEmitter;
+use SlimAPI\Configurator\ChainConfigurator;
 use SlimAPI\DI\ContainerAdapter;
 use SlimAPI\Http\Response;
 
@@ -25,5 +26,11 @@ class App extends BaseApp
         $response = $this->handle($request);
         $responseEmitter = new ResponseEmitter();
         $responseEmitter->emit($response);
+    }
+
+    public function addChainConfigurator(): void
+    {
+        $chainConfigurator = $this->getContainer()->getByType(ChainConfigurator::class);
+        $chainConfigurator->configureApplication($this);
     }
 }

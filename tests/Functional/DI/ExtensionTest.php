@@ -13,7 +13,7 @@ use SlimAPI\Tests\Functional\TestCase;
 
 class ExtensionTest extends TestCase
 {
-    public function testLoadConfiguration(): void
+    public function testSetupApplication(): void
     {
         $container = self::createContainer(__DIR__ . '/fixtures/config.neon');
 
@@ -24,7 +24,7 @@ class ExtensionTest extends TestCase
         self::assertInstanceOf(App::class, $container->getService('slimapi.application'));
     }
 
-    public function testConfigurators(): void
+    public function testSetupConfigurator(): void
     {
         $container = self::createContainer(__DIR__ . '/fixtures/config.neon');
         $chainConfigurator = $container->getByType(ChainConfigurator::class);
