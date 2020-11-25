@@ -71,5 +71,24 @@
                 "type": "object"
             }
         }
+    ],
+    "[PUT]/foo/v1/bar/{?id}": [
+        {
+            "meta": {
+                "title": "",
+                "type": "request"
+            },
+            "schema": {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "properties": {
+                    "foo": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "foo"
+                ]
+            }
+        }
     ]
 }

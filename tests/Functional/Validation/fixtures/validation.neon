@@ -8,6 +8,7 @@ slimapi:
 routes:
   - [GET, /foo/v1/bar, SlimAPI\Tests\Functional\Validation\Middleware\RequestMiddlewareTest::handlerFoo]
   - [POST, /foo/v1/bar, SlimAPI\Tests\Functional\Validation\Middleware\RequestMiddlewareTest::handlerFoo]
+  - [PUT, '/foo/v1/bar/[{id}]', SlimAPI\Tests\Functional\Validation\Middleware\RequestMiddlewareTest::handlerFoo]
   - [PUT, /foo/v1/missing-schema, SlimAPI\Tests\Functional\Validation\Middleware\RequestMiddlewareTest::handlerFoo]
   - [DELETE, /foo/v1/bar, SlimAPI\Tests\Functional\Validation\Middleware\RequestMiddlewareTest::handlerFoo, {validation_mapper: false}]
 

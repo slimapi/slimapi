@@ -46,7 +46,15 @@ class RequestMiddlewareTest extends TestCase
         self::assertCount(0, $data['validation']);
     }
 
-    public function testMissingSchema(): void
+    public function testGetSchemaApiBlueprintOptional(): void
+    {
+        $response = self::$application->handle(self::createRequestPut('/foo/v1/bar/123', ['foo' => 'bar']));
+        $data = $response->getJson(true);
+
+        self::assertSame('/foo/v1/bar/[{id}]', $data['pattern']);
+    }
+
+    public function testGetSchemaMissing(): void
     {
         self::expectException(LogicException::class);
         self::expectExceptionMessage('Validation schema for request [PUT /foo/v1/missing-schema] has not been found.');

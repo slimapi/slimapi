@@ -11,10 +11,36 @@ use SlimAPI\Exception\Http\BadRequestException;
 use SlimAPI\Exception\LogicException;
 use SlimAPI\Http\Request;
 use SlimAPI\Validation\Exception\RequestException;
+use SlimAPI\Validation\Mapper;
 use SlimAPI\Validation\Validator\ValidatorInterface;
 
 class RequestMiddleware extends Middleware
 {
+    protected function getSchema(Mapper $mapper, Request $request): array
+    {
+        /** @var string $schemaName */
+        $schemaName = $mapper->getValue() ?? $this->requestToSchemaName($request);
+        $schemaList = $this->generator->getSchemaList();
+        if (!isset($schemaList[$schemaName])) {
+
+            // Try API Blueprint Optional Parameter Format
+            // FastRoute Optional Parameter:        /path/[{id}]
+            // API Blueprint Optional Parameter:    /path/{?id}
+            $schemaName = str_replace(['[{', '}]'], ['{?', '}'], $schemaName);
+            if (isset($schemaList[$schemaName])) {
+                return $schemaList[$schemaName];
+            }
+
+            throw new LogicException(sprintf(
+                'Validation schema for request [%s %s] has not been found.',
+                $request->getMethod(),
+                $request->getRoute()->getPattern(),
+            ));
+        }
+
+        return $schemaList[$schemaName];
+    }
+
     protected function requestToSchemaName(Request $request): string
     {
         return sprintf('[%s]%s', $request->getMethod(), $request->getRoute()->getPattern());
@@ -27,17 +53,7 @@ class RequestMiddleware extends Middleware
             return $handler->handle($request);
         }
 
-        $schemaList = $this->generator->getSchemaList();
-        $schemaName = $mapper->getValue() ?? $this->requestToSchemaName($request);
-        if (!isset($schemaList[$schemaName])) {
-            throw new LogicException(sprintf(
-                'Validation schema for request [%s %s] has not been found.',
-                $request->getMethod(),
-                $request->getRoute()->getPattern(),
-            ));
-        }
-
-        $schema = $schemaList[$schemaName];
+        $schema = $this->getSchema($mapper, $request);
         $request = $request->withAttribute(Request::ATTRIBUTE_VALIDATION_SCHEMA, $schema);
         if ($schema[0]->meta->type !== ValidatorInterface::TYPE_REQUEST) { // skip validation of request without required body
             return $handler->handle($request);
