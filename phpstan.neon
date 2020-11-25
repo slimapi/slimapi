@@ -8,3 +8,8 @@ parameters:
   level: 8
   tmpDir: %currentWorkingDirectory%/tmp
   checkMissingIterableValueType: false
+  ignoreErrors:
+    -
+      # https://github.com/phpstan/phpstan/issues/4121
+      message: '#Strict comparison|ternary#'
+      path: src/Http/Message.php

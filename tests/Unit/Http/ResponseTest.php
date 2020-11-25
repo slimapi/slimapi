@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SlimAPI\Tests\Unit\Http;
 
 use JsonException;
+use SlimAPI\Exception\Http\InternalServerError;
 use SlimAPI\Http\Response;
 use SlimAPI\Tests\TestCase;
 
@@ -25,6 +26,15 @@ class ResponseTest extends TestCase
 
         self::expectException(JsonException::class);
         self::expectExceptionMessage('Syntax error');
+        $response->getJson();
+    }
+
+    public function testGetJsonEmpty(): void
+    {
+        $response = (new Response());
+
+        self::expectException(InternalServerError::class);
+        self::expectExceptionMessage('Empty body cannot be parsed.');
         $response->getJson();
     }
 

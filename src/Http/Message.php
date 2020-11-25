@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace SlimAPI\Http;
 
-use JsonException;
+use SlimAPI\Exception\Http\BadRequestException;
+use SlimAPI\Exception\Http\InternalServerError;
 use function preg_split;
 
 trait Message
@@ -15,11 +16,19 @@ trait Message
      * @param int $depth
      * @param int $options
      * @return mixed
-     * @throws JsonException
      */
     public function getJson(bool $assoc = false, int $depth = 512, int $options = JSON_THROW_ON_ERROR)
     {
-        return json_decode((string) $this->body, $assoc, $depth, $options);
+        $body = (string) $this->body;
+        if ($body === '') {
+            $exception = self::class === Request::class
+                ? BadRequestException::class
+                : InternalServerError::class;
+
+            throw new $exception('Empty body cannot be parsed.');
+        }
+
+        return json_decode($body, $assoc, $depth, $options);
     }
 
     /**
