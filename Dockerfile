@@ -1,4 +1,4 @@
-FROM slimapi/nginx-php:7.4.10
+FROM slimapi/nginx-php:7.4.12
 
 ADD composer.json ${PROJECT_ROOT}
 RUN composer install --prefer-dist --no-interaction && \
