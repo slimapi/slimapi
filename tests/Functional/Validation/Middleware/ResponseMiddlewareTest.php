@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace SlimAPI\Tests\Functional\Validation\Middleware;
 
 use SlimAPI\App;
+use SlimAPI\Exception\Validation\ResponseException;
 use SlimAPI\Http\Request;
 use SlimAPI\Http\Response;
 use SlimAPI\Tests\Functional\TestCase;
-use SlimAPI\Validation\Exception\ResponseException;
 
 class ResponseMiddlewareTest extends TestCase
 {
@@ -29,7 +29,10 @@ class ResponseMiddlewareTest extends TestCase
     {
         self::expectException(ResponseException::class);
         self::expectExceptionMessage(sprintf(
-            '["%s","%s"]',
+            '[' .
+                '{"property":"","message":"%s","constraint":"additionalProp"},' .
+                '{"property":"","message":"%s","constraint":"additionalProp"}' .
+            ']',
             'The property pattern is not defined and the definition does not allow additional properties',
             'The property query is not defined and the definition does not allow additional properties',
         ));

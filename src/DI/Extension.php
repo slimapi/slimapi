@@ -11,10 +11,14 @@ use Nette\DI\Definitions\Statement;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\CallableResolver;
+use Slim\Handlers\ErrorHandler;
+use Slim\Middleware\ErrorMiddleware;
 use Slim\Psr7\Factory\ResponseFactory;
 use SlimAPI\App;
 use SlimAPI\AppFactory;
 use SlimAPI\Configurator\ChainConfigurator;
+use SlimAPI\Error\JsonErrorRenderer;
 use SlimAPI\Http\RequestFactory;
 use SlimAPI\Http\Response;
 
@@ -24,6 +28,15 @@ class Extension extends CompilerExtension
     {
         return Expect::structure([
             'configurators' => Expect::array(),
+            'errors' => Expect::structure([
+                'debugMode' => Expect::bool(false),
+                'displayErrorDetails' => Expect::bool(false),
+                'handler' => Expect::string(ErrorHandler::class),
+                'logErrorDetails' => Expect::bool(true),
+                'logErrors' => Expect::bool(true),
+                'middleware' => Expect::string(ErrorMiddleware::class),
+                'renderer' => Expect::string(JsonErrorRenderer::class),
+            ]),
         ]);
     }
 
@@ -32,6 +45,7 @@ class Extension extends CompilerExtension
         $this->setupApplication();
         $this->setupConfigurator();
         $this->setupRouting();
+        $this->setupErrorHandling();
     }
 
     private function setupApplication(): void
@@ -40,6 +54,9 @@ class Extension extends CompilerExtension
 
         $container = $builder->addDefinition($this->prefix('container'))
             ->setFactory(ContainerAdapter::class, [$this->name]);
+
+        $callableResolver = $builder->addDefinition($this->prefix('callableResolver'))
+            ->setFactory(CallableResolver::class, [$container]);
 
         $builder->addDefinition($this->prefix('request'))
             ->setType(ServerRequestInterface::class)
@@ -50,7 +67,7 @@ class Extension extends CompilerExtension
             ->addSetup(new Statement(ResponseFactory::class . '::$responseClass = ?', [Response::class]));
 
         $builder->addDefinition($this->prefix('applicationFactory'))
-            ->setFactory(AppFactory::class, [$responseFactory, $container]);
+            ->setFactory(AppFactory::class, [$responseFactory, $container, $callableResolver]);
 
         $builder->addDefinition($this->prefix('application'))
             ->setFactory($this->prefix('@applicationFactory::createApplication'));
@@ -63,7 +80,8 @@ class Extension extends CompilerExtension
         $chainConfigurator = $builder->addDefinition($this->prefix('chainConfigurator'))
             ->setFactory(ChainConfigurator::class);
 
-        foreach ($this->config->configurators as $configurator) { // @phpstan-ignore-line
+        $config = $this->config->configurators; // @phpstan-ignore-line
+        foreach ($config as $configurator) {
             if (!$configurator instanceof Statement) {
                 $configurator = new Statement($configurator);
             }
@@ -85,14 +103,44 @@ class Extension extends CompilerExtension
             $chainConfigurator->addSetup('addConfigurator', [$configuratorService]);
         }
 
-        $this->getApplicationDefinition()
-            ->addSetup('addChainConfigurator');
+        $this->getApplicationDefinition()->addSetup('addChainConfigurator');
     }
 
     private function setupRouting(): void
     {
-        $this->getApplicationDefinition()
-            ->addSetup('addRoutingMiddleware');
+        $this->getApplicationDefinition()->addSetup('addRoutingMiddleware');
+    }
+
+    private function setupErrorHandling(): void
+    {
+        $config = $this->config->errors; // @phpstan-ignore-line
+        if ($config->debugMode === true) {
+            return;
+        }
+
+        $builder = $this->getContainerBuilder();
+
+        $callableResolver = $builder->getDefinitionByType(CallableResolver::class);
+        $responseFactory = $builder->getDefinitionByType(ResponseFactory::class);
+
+        $errorRenderer = $builder->addDefinition($this->prefix('errorRenderer'))
+            ->setFactory($config->renderer);
+
+        $errorHandler = $builder->addDefinition($this->prefix('errorHandler'))
+            ->setFactory($config->handler, [$callableResolver, $responseFactory])
+            ->addSetup('registerErrorRenderer', ['application/json', $errorRenderer]);
+
+        $errorMiddleware = $builder->addDefinition($this->prefix('errorMiddleware'))
+            ->setFactory($config->middleware, [
+                $callableResolver,
+                $responseFactory,
+                $config->displayErrorDetails,
+                $config->logErrors,
+                $config->logErrorDetails,
+            ])
+            ->addSetup('setDefaultErrorHandler', [$errorHandler]);
+
+        $this->getApplicationDefinition()->addSetup('add', [$errorMiddleware]);
     }
 
     private function getApplicationDefinition(): ServiceDefinition

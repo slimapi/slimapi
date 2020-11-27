@@ -1,0 +1,12 @@
+slimapi:
+    errors:
+        logErrors: false
+
+routes:
+  - [GET, /error/slim-http, SlimAPI\Tests\Functional\Error\JsonErrorRendererTest::handler]
+  - [GET, /error/validation-request, SlimAPI\Tests\Functional\Error\JsonErrorRendererTest::handler]
+  - [GET, /error/slimapi-http, SlimAPI\Tests\Functional\Error\JsonErrorRendererTest::handler]
+  - [GET, /error/unexpeced, SlimAPI\Tests\Functional\Error\JsonErrorRendererTest::handler]
+
+services:
+    - SlimAPI\Tests\Functional\Error\JsonErrorRendererTest

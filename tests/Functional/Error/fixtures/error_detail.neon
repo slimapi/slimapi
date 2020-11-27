@@ -1,0 +1,6 @@
+includes:
+    - error.neon
+
+slimapi:
+    errors:
+        displayErrorDetails: true

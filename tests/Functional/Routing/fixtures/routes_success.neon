@@ -1,4 +1,6 @@
 slimapi:
+    errors:
+        debugMode: true
 
 routes:
     - [GET, /routes-test, SlimAPI\Tests\Functional\Routing\ConfiguratorTest::testSuccess, {route_settings: foo}]

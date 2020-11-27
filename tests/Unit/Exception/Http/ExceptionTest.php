@@ -40,7 +40,7 @@ class ExceptionTest extends TestCase
     public function testGenerateErrorFail(): void
     {
         self::expectException(InvalidArgumentException::class);
-        self::expectExceptionMessage('Argument $error has to be set.');
+        self::expectExceptionMessage('Cannot guess $error, set manually please.');
         new Exception('msg', 999);
     }
 }

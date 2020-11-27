@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace SlimAPI\Tests\Functional\Validation\Validator;
 
 use SlimAPI\App;
+use SlimAPI\Exception\Validation\RequestException;
 use SlimAPI\Tests\Functional\TestCase;
-use SlimAPI\Validation\Exception\RequestException;
 
 class JsonSchemaValidatorTest extends TestCase
 {
@@ -34,9 +34,11 @@ class JsonSchemaValidatorTest extends TestCase
         $application = $container->getByType(App::class);
 
         self::expectException(RequestException::class);
-        self::expectExceptionMessage(
-            '["The property fooProperty is not defined and the definition does not allow additional properties"]',
-        );
+        self::expectExceptionMessage(sprintf(
+            '[{"property":"","message":"%s","constraint":"additionalProp"}]',
+            'The property fooProperty is not defined and the definition does not allow additional properties',
+        ));
+
         $application->handle(self::createRequestPost('/foo/v1/bar', ['id' => 123, 'fooProperty' => 'bar'], []));
     }
 

@@ -9,8 +9,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SlimAPI\Exception\Http\BadRequestException;
 use SlimAPI\Exception\LogicException;
+use SlimAPI\Exception\Validation\RequestException;
 use SlimAPI\Http\Request;
-use SlimAPI\Validation\Exception\RequestException;
 use SlimAPI\Validation\Mapper;
 use SlimAPI\Validation\Validator\ValidatorInterface;
 

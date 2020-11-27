@@ -47,21 +47,24 @@ class JsonSchemaValidator implements ValidatorInterface
         return $this->validator->isValid();
     }
 
-    public function generateErrorMessage(): string
+    public function getErrorMessage(): string
+    {
+        return 'JSON Schema Validation Error';
+    }
+
+    public function getErrors(): array
     {
         if ($this->validator === null) {
             throw new LogicException(sprintf('Missing method call %s:%s().', self::class, 'isValid'));
         }
 
-        $error = [];
+        $errors = [];
         foreach ($this->validator->getErrors() as $e) {
-            if ($e['property'] === '') {
-                $error[] = $e['message'];
-            } else {
-                $error[] = [$e['property'] => $e['message']];
-            }
+            unset($e['pointer']);
+            unset($e['context']);
+            $errors[] = $e;
         }
 
-        return json_encode($error, JSON_THROW_ON_ERROR);
+        return $errors;
     }
 }

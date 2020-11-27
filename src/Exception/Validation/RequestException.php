@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Validation\Exception;
+namespace SlimAPI\Exception\Validation;
 
 use Fig\Http\Message\StatusCodeInterface;
 

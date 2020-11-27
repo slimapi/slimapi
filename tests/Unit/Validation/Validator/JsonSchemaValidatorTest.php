@@ -21,22 +21,28 @@ class JsonSchemaValidatorTest extends TestCase
 
     public function testStrictMode(): void
     {
-        $schema = json_decode('{"properties":{"propertyOne":{"type":"array","items":[{"type":"string"}]}}}');
-        $data = json_decode('{"propertyTwo":[42]}');
+        $schema = json_decode('{"properties":{"one":{"type":"array","items":[{"type":"string"}]}}}');
+        $data = json_decode('{"two":[42]}');
 
         $validator = new JsonSchemaValidator();
         self::assertFalse($validator->isValid($data, $schema));
 
         self::assertSame(
-            '["The property propertyTwo is not defined and the definition does not allow additional properties"]',
-            $validator->generateErrorMessage(),
+            [
+                [
+                    'property' => '',
+                    'message' => 'The property two is not defined and the definition does not allow additional properties',
+                    'constraint' => 'additionalProp',
+                ],
+            ],
+            $validator->getErrors(),
         );
     }
 
-    public function testGenerateErrorMessageWithoutCallingIsValid(): void
+    public function testGetErrorsWithoutCallingIsValid(): void
     {
         self::expectException(LogicException::class);
         self::expectExceptionMessage('Missing method call SlimAPI\Validation\Validator\JsonSchemaValidator:isValid().');
-        (new JsonSchemaValidator())->generateErrorMessage();
+        (new JsonSchemaValidator())->getErrors();
     }
 }

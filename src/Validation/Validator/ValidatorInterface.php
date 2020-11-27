@@ -20,5 +20,7 @@ interface ValidatorInterface
      */
     public function isValid($data, stdClass $schema): bool;
 
-    public function generateErrorMessage(): string;
+    public function getErrorMessage(): string;
+
+    public function getErrors(): array;
 }

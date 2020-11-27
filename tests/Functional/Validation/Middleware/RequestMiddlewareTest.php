@@ -8,10 +8,10 @@ use Slim\Psr7\Factory\StreamFactory;
 use SlimAPI\App;
 use SlimAPI\Exception\Http\BadRequestException;
 use SlimAPI\Exception\LogicException;
+use SlimAPI\Exception\Validation\RequestException;
 use SlimAPI\Http\Request;
 use SlimAPI\Http\Response;
 use SlimAPI\Tests\Functional\TestCase;
-use SlimAPI\Validation\Exception\RequestException;
 
 class RequestMiddlewareTest extends TestCase
 {
@@ -31,7 +31,9 @@ class RequestMiddlewareTest extends TestCase
     public function testValidationFailed(): void
     {
         self::expectException(RequestException::class);
-        self::expectExceptionMessage('[{"id":"String value found, but a number is required"}]');
+        self::expectExceptionMessage(
+            '[{"property":"id","message":"String value found, but a number is required","constraint":"type"}]',
+        );
         self::expectExceptionCode(400);
         self::$application->handle(self::createRequestPost('/foo/v1/bar', ['id' => 'not-type-number'], []));
     }

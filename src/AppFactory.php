@@ -4,32 +4,34 @@ declare(strict_types=1);
 
 namespace SlimAPI;
 
-use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Container\ContainerInterface as Container;
+use Psr\Http\Message\ResponseFactoryInterface as ResponseFactory;
 use Slim\CallableResolver;
 use SlimAPI\Routing\RouteCollector;
 
 class AppFactory
 {
-    private ResponseFactoryInterface $responseFactory;
+    private ResponseFactory $responseFactory;
 
-    private ContainerInterface $container;
+    private Container $container;
 
-    public function __construct(ResponseFactoryInterface $responseFactory, ContainerInterface $container)
+    private CallableResolver $callableResolver;
+
+    public function __construct(ResponseFactory $responseFactory, Container $container, CallableResolver $callableResolver)
     {
         $this->responseFactory = $responseFactory;
         $this->container = $container;
+        $this->callableResolver = $callableResolver;
     }
 
     public function createApplication(): App
     {
-        $callableResolver = new CallableResolver($this->container);
-        $routeCollector = new RouteCollector($this->responseFactory, $callableResolver, $this->container);
+        $routeCollector = new RouteCollector($this->responseFactory, $this->callableResolver, $this->container);
 
         return new App(
             $this->responseFactory,
             $this->container,
-            $callableResolver,
+            $this->callableResolver,
             $routeCollector,
         );
     }
