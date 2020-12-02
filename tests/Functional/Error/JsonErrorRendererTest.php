@@ -22,7 +22,7 @@ class JsonErrorRendererTest extends TestCase
 
     public function testSlimHttpException(): void
     {
-        $response = self::doRequest('/error/slim-http');
+        $response = $this->doRequest('/error/slim-http');
         $data = $response->getJson();
 
         Assert::assertSame(400, $data->code);
@@ -33,7 +33,7 @@ class JsonErrorRendererTest extends TestCase
 
     public function testValidationRequestException(): void
     {
-        $response = self::doRequest('/error/validation-request');
+        $response = $this->doRequest('/error/validation-request');
         $data = $response->getJson();
 
         Assert::assertSame(400, $data->code);
@@ -54,7 +54,7 @@ class JsonErrorRendererTest extends TestCase
 
     public function testSlimApiHttpException(): void
     {
-        $response = self::doRequest('/error/slimapi-http');
+        $response = $this->doRequest('/error/slimapi-http');
         $data = $response->getJson();
 
         Assert::assertSame(422, $data->code);
@@ -65,7 +65,7 @@ class JsonErrorRendererTest extends TestCase
 
     public function testUnexpectedException(): void
     {
-        $response = self::doRequest('/error/unexpeced');
+        $response = $this->doRequest('/error/unexpeced');
         $data = $response->getJson();
 
         Assert::assertSame(500, $data->code);
@@ -79,7 +79,7 @@ class JsonErrorRendererTest extends TestCase
         $container = self::createContainer(__DIR__ . '/fixtures/error_detail.neon');
         $application = $container->getByType(App::class);
 
-        $request = self::createRequestGet('/error/unexpeced');
+        $request = $this->createRequestGet('/error/unexpeced');
         $request = $request->withHeader('Accept', 'application/json');
         $response = $application->handle($request);
         $data = $response->getJson();
@@ -125,10 +125,9 @@ class JsonErrorRendererTest extends TestCase
         self::$application = $container->getByType(App::class);
     }
 
-    public static function doRequest(string $path): Response
+    private function doRequest(string $path): Response
     {
-        $request = self::createRequestGet($path);
-        $request = $request->withHeader('Accept', 'application/json');
+        $request = $this->createRequestGet($path);
         return self::$application->handle($request);
     }
 }

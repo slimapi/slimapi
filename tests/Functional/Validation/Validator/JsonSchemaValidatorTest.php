@@ -20,7 +20,7 @@ class JsonSchemaValidatorTest extends TestCase
         $container = self::createContainer(__DIR__ . '/../fixtures/validation.neon');
         $application = $container->getByType(App::class);
 
-        $response = $application->handle(self::createRequestPost('/foo/v1/bar', ['id' => 123], []));
+        $response = $application->handle($this->createRequestPost('/foo/v1/bar', ['id' => 123], []));
         $data = $response->getJson(true);
 
         self::assertSame('POST', $data['method']);
@@ -39,7 +39,7 @@ class JsonSchemaValidatorTest extends TestCase
             'The property fooProperty is not defined and the definition does not allow additional properties',
         ));
 
-        $application->handle(self::createRequestPost('/foo/v1/bar', ['id' => 123, 'fooProperty' => 'bar'], []));
+        $application->handle($this->createRequestPost('/foo/v1/bar', ['id' => 123, 'fooProperty' => 'bar'], []));
     }
 
     public function testSuccessWhenStrictModeOff(): void
@@ -47,7 +47,7 @@ class JsonSchemaValidatorTest extends TestCase
         $container = self::createContainer(__DIR__ . '/../fixtures/validation_nonstrict.neon');
         $application = $container->getByType(App::class);
 
-        $response = $application->handle(self::createRequestPost('/foo/v1/bar', ['id' => 123, 'fooProperty' => 'bar']));
+        $response = $application->handle($this->createRequestPost('/foo/v1/bar', ['id' => 123, 'fooProperty' => 'bar']));
         $data = $response->getJson(true);
 
         self::assertSame('POST', $data['method']);

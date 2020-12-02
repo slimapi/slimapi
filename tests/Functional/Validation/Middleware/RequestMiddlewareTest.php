@@ -20,7 +20,7 @@ class RequestMiddlewareTest extends TestCase
 
     public function testValidationSuccess(): void
     {
-        $response = self::$application->handle(self::createRequestPost('/foo/v1/bar', ['id' => 123], []));
+        $response = self::$application->handle($this->createRequestPost('/foo/v1/bar', ['id' => 123], []));
         $data = $response->getJson(true);
 
         self::assertSame('POST', $data['method']);
@@ -35,12 +35,12 @@ class RequestMiddlewareTest extends TestCase
             '[{"property":"id","message":"String value found, but a number is required","constraint":"type"}]',
         );
         self::expectExceptionCode(400);
-        self::$application->handle(self::createRequestPost('/foo/v1/bar', ['id' => 'not-type-number'], []));
+        self::$application->handle($this->createRequestPost('/foo/v1/bar', ['id' => 'not-type-number'], []));
     }
 
     public function testSkipValidation(): void
     {
-        $response = self::$application->handle(self::createRequestDelete('/foo/v1/bar'));
+        $response = self::$application->handle($this->createRequestDelete('/foo/v1/bar'));
         $data = $response->getJson(true);
 
         self::assertSame('DELETE', $data['method']);
@@ -50,7 +50,7 @@ class RequestMiddlewareTest extends TestCase
 
     public function testGetSchemaApiBlueprintOptional(): void
     {
-        $response = self::$application->handle(self::createRequestPut('/foo/v1/bar/123', ['foo' => 'bar']));
+        $response = self::$application->handle($this->createRequestPut('/foo/v1/bar/123', ['foo' => 'bar']));
         $data = $response->getJson(true);
 
         self::assertSame('/foo/v1/bar/[{id}]', $data['pattern']);
@@ -60,12 +60,12 @@ class RequestMiddlewareTest extends TestCase
     {
         self::expectException(LogicException::class);
         self::expectExceptionMessage('Validation schema for request [PUT /foo/v1/missing-schema] has not been found.');
-        self::$application->handle(self::createRequestPut('/foo/v1/missing-schema', ['foo' => 'bar']));
+        self::$application->handle($this->createRequestPut('/foo/v1/missing-schema', ['foo' => 'bar']));
     }
 
     public function testAutoSkipWhenSchemaForRequestMissing(): void
     {
-        $response = self::$application->handle(self::createRequestGet('/foo/v1/bar', ['foo' => 'bar']));
+        $response = self::$application->handle($this->createRequestGet('/foo/v1/bar', ['foo' => 'bar']));
         $data = $response->getJson(true);
 
         self::assertSame('GET', $data['method']);
@@ -75,7 +75,7 @@ class RequestMiddlewareTest extends TestCase
 
     public function testBadRequestType(): void
     {
-        $request = self::createRequest('POST', '/foo/v1/bar');
+        $request = $this->createRequest('POST', '/foo/v1/bar');
         $body = (new StreamFactory())->createStream();
         $body->write('foo-bar');
         $request = $request->withBody($body);
@@ -89,7 +89,7 @@ class RequestMiddlewareTest extends TestCase
 
     public function testMissingRequestBody(): void
     {
-        $request = self::createRequest('POST', '/foo/v1/bar');
+        $request = $this->createRequest('POST', '/foo/v1/bar');
 
         self::expectException(BadRequestException::class);
         self::expectExceptionMessage('Missing request body.');
@@ -99,7 +99,7 @@ class RequestMiddlewareTest extends TestCase
 
     public function testBadRequestBody(): void
     {
-        $request = self::createRequest('POST', '/foo/v1/bar');
+        $request = $this->createRequest('POST', '/foo/v1/bar');
         $body = (new StreamFactory())->createStream();
         $body->write("\x00");
         $request = $request->withBody($body);

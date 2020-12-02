@@ -35,7 +35,7 @@ class ConfiguratorTest extends TestCase
         self::assertSame('/routes-test-2', $second->getPattern());
         self::assertSame('routeName', $second->getName());
 
-        $response = $application->handle(self::createRequestGet('/routes-test'));
+        $response = $application->handle($this->createRequestGet('/routes-test'));
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([
             'response-test-success-method' => 'GET',
@@ -44,7 +44,7 @@ class ConfiguratorTest extends TestCase
             ],
         ], $response->getJson(true));
 
-        $response = $application->handle(self::createRequestPost('/routes-test-2', []));
+        $response = $application->handle($this->createRequestPost('/routes-test-2', []));
         self::assertSame(200, $response->getStatusCode());
         self::assertSame([
             'response-test-success-method' => 'POST',
@@ -64,7 +64,7 @@ class ConfiguratorTest extends TestCase
 
         self::expectException(LogicException::class);
         self::expectExceptionMessage('Callback SlimAPI\Tests\Functional\Routing\ConfiguratorTest::actionFail is not callable.');
-        $application->handle(self::createRequestGet('/routes-test-fail'));
+        $application->handle($this->createRequestGet('/routes-test-fail'));
     }
 
     public function actionTestSuccess(Request $request, Response $response): Response

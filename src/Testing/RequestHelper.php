@@ -11,27 +11,29 @@ use SlimAPI\Http\Request;
 
 trait RequestHelper
 {
-    protected static function createRequestGet(string $path, array $query = [], array $headers = []): Request
+    protected array $onCreatedRequest = [];
+
+    protected function createRequestGet(string $path, array $query = [], array $headers = []): Request
     {
-        return self::createRequest('GET', $path, $query, [], $headers);
+        return $this->createRequest('GET', $path, $query, [], $headers);
     }
 
-    protected static function createRequestPost(string $path, array $data, array $query = [], array $headers = []): Request
+    protected function createRequestPost(string $path, array $data, array $query = [], array $headers = []): Request
     {
-        return self::createRequest('POST', $path, $query, $data, $headers);
+        return $this->createRequest('POST', $path, $query, $data, $headers);
     }
 
-    protected static function createRequestPut(string $path, array $data, array $query = [], array $headers = []): Request
+    protected function createRequestPut(string $path, array $data, array $query = [], array $headers = []): Request
     {
-        return self::createRequest('PUT', $path, $query, $data, $headers);
+        return $this->createRequest('PUT', $path, $query, $data, $headers);
     }
 
-    protected static function createRequestDelete(string $path, array $query = [], array $headers = []): Request
+    protected function createRequestDelete(string $path, array $query = [], array $headers = []): Request
     {
-        return self::createRequest('DELETE', $path, $query, [], $headers);
+        return $this->createRequest('DELETE', $path, $query, [], $headers);
     }
 
-    protected static function createRequest(string $method, string $path, array $query = [], array $data = [], array $headers = []): Request // phpcs:ignore Generic.Files.LineLength
+    protected function createRequest(string $method, string $path, array $query = [], array $data = [], array $headers = []): Request // phpcs:ignore Generic.Files.LineLength
     {
         $headers = new Headers($headers);
 
@@ -52,6 +54,14 @@ trait RequestHelper
 
         /** @var Request $request */
         $request = $request->withQueryParams($query);
+        $request = $request->withHeader('Accept', 'application/json');
+
+        foreach ($this->onCreatedRequest as $callback) {
+            if (is_callable($callback)) {
+                $request = $callback($request);
+            }
+        }
+
         return $request;
     }
 }

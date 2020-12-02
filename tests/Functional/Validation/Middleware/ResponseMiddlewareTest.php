@@ -17,7 +17,7 @@ class ResponseMiddlewareTest extends TestCase
 
     public function testValidationSuccess(): void
     {
-        $response = self::$application->handle(self::createRequestGet('/bar/v1/foo', ['date' => 'now']));
+        $response = self::$application->handle($this->createRequestGet('/bar/v1/foo', ['date' => 'now']));
         $data = $response->getJson(true);
 
         self::assertSame('GET', $data['method']);
@@ -37,18 +37,18 @@ class ResponseMiddlewareTest extends TestCase
             'The property query is not defined and the definition does not allow additional properties',
         ));
         self::expectExceptionCode(500);
-        self::$application->handle(self::createRequestGet('/bar/v1/fail'));
+        self::$application->handle($this->createRequestGet('/bar/v1/fail'));
     }
 
     public function testSkipNonSuccessful(): void
     {
-        $response = self::$application->handle(self::createRequestGet('/bar/v1/error'));
+        $response = self::$application->handle($this->createRequestGet('/bar/v1/error'));
         self::assertSame(422, $response->getStatusCode());
     }
 
     public function testManualSkip(): void
     {
-        $response = self::$application->handle(self::createRequestGet('/bar/v1/skip'));
+        $response = self::$application->handle($this->createRequestGet('/bar/v1/skip'));
         $data = $response->getJson(true);
 
         self::assertSame('GET', $data['method']);
@@ -57,7 +57,7 @@ class ResponseMiddlewareTest extends TestCase
 
     public function testWhenOnlyRequestSchemaIsAvailable(): void
     {
-        $response = self::$application->handle(self::createRequestPut('/bar/v1/foo', ['id' => 123]));
+        $response = self::$application->handle($this->createRequestPut('/bar/v1/foo', ['id' => 123]));
         $data = $response->getJson(true);
 
         self::assertSame('PUT', $data['method']);
