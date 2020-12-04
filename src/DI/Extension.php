@@ -12,13 +12,13 @@ use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\CallableResolver;
-use Slim\Handlers\ErrorHandler;
 use Slim\Middleware\ErrorMiddleware;
 use Slim\Psr7\Factory\ResponseFactory;
 use SlimAPI\App;
 use SlimAPI\AppFactory;
 use SlimAPI\Configurator\ChainConfigurator;
 use SlimAPI\Error\JsonErrorRenderer;
+use SlimAPI\Handlers\ErrorHandler;
 use SlimAPI\Http\RequestFactory;
 use SlimAPI\Http\Response;
 
