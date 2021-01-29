@@ -8,6 +8,7 @@ parameters:
   level: 8
   tmpDir: %currentWorkingDirectory%/tmp
   checkMissingIterableValueType: false
+  treatPhpDocTypesAsCertain: false
   ignoreErrors:
     -
       # https://github.com/phpstan/phpstan/issues/4121

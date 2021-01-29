@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SlimAPI\Tests\Unit\Testing;
 
+use InvalidArgumentException;
+use JsonSerializable;
 use SlimAPI\Http\Request;
 use SlimAPI\Testing\RequestHelper;
 use SlimAPI\Tests\TestCase;
@@ -46,6 +48,46 @@ class RequestHelperTest extends TestCase
         self::assertSame('application/json', $request->getHeader('Accept')[0]);
         self::assertSame('/req-helper-test/post', $request->getUri()->getPath());
         self::assertSame('{"data":"foo"}', (string) $request->getBody());
+    }
+
+    public function testCreateRequestPostDataStdClass(): void
+    {
+        $request = $this->createRequestPost('/req-helper-test/post-stdclass', (object) ['data' => 'foo']);
+        self::assertSame('POST', $request->getMethod());
+        self::assertSame('application/json', $request->getHeader('Accept')[0]);
+        self::assertSame('/req-helper-test/post-stdclass', $request->getUri()->getPath());
+        self::assertSame('{"data":"foo"}', (string) $request->getBody());
+    }
+
+    public function testCreateRequestPostDataJsonSerializable(): void
+    {
+        $json = new class implements JsonSerializable
+        {
+            private string $data = 'foo';
+
+            public function jsonSerialize(): array
+            {
+                return get_object_vars($this);
+            }
+        };
+
+        $request = $this->createRequestPost('/req-helper-test/post-json-serializable', $json);
+        self::assertSame('POST', $request->getMethod());
+        self::assertSame('application/json', $request->getHeader('Accept')[0]);
+        self::assertSame('/req-helper-test/post-json-serializable', $request->getUri()->getPath());
+        self::assertSame('{"data":"foo"}', (string) $request->getBody());
+    }
+
+    public function testCreateRequestPostDataFail(): void
+    {
+        self::expectException(InvalidArgumentException::class);
+
+        $obj = new class
+        {
+            private string $data = 'foo'; // phpcs:ignore SlevomatCodingStandard.Classes.UnusedPrivateElements
+        };
+
+        $this->createRequestPost('/req-helper-test/post-data-fail', $obj); // @phpstan-ignore-line
     }
 
     public function testCreateRequestPostWithQuery(): void
