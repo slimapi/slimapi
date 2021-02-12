@@ -11,6 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Command extends BaseCommand
 {
+    protected static $defaultName = 'validation:generate'; // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint
+
     private ?Generator $generator = null;
 
     public function setGenerator(Generator $generator): self
@@ -37,9 +39,7 @@ class Command extends BaseCommand
 
     protected function configure(): void
     {
-        $this
-            ->setName('validation:generate')
-            ->setDescription('Generate validation schema cache-file for application.');
+        $this->setDescription('Generate validation schema cache-file for application.');
 
         parent::configure();
     }
