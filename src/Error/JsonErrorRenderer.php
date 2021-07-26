@@ -10,6 +10,7 @@ use Slim\Exception\HttpException;
 use SlimAPI\Exception\Http\Exception;
 use SlimAPI\Exception\Http\Generator;
 use SlimAPI\Exception\Validation\RequestException;
+use SlimAPI\Routing\Configurator;
 use Throwable;
 
 class JsonErrorRenderer extends AbstractErrorRenderer
@@ -53,6 +54,20 @@ class JsonErrorRenderer extends AbstractErrorRenderer
         return $error;
     }
 
+    private function traceParse(Throwable $exception): array
+    {
+        $data = [];
+        foreach (explode(PHP_EOL, $exception->getTraceAsString()) as $trace) {
+            if (strpos($trace, Configurator::class) !== false) {
+                break;
+            }
+
+            $data[] = $trace;
+        }
+
+        return $data;
+    }
+
     public function __invoke(Throwable $exception, bool $displayErrorDetails): string
     {
         $error = $this->generateError($exception);
@@ -64,6 +79,7 @@ class JsonErrorRenderer extends AbstractErrorRenderer
                 'line' => $exception->getLine(),
                 'message' => $exception->getMessage(),
                 'type' => get_class($exception),
+                'trace' => $this->traceParse($exception),
             ];
         }
 

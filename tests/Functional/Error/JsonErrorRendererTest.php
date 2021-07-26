@@ -93,6 +93,9 @@ class JsonErrorRendererTest extends TestCase
         Assert::assertIsNumeric($data->exception->line);
         Assert::assertSame('This is something unexpected!', $data->exception->message);
         Assert::assertSame('LogicException', $data->exception->type);
+        Assert::assertIsArray($data->exception->trace);
+        Assert::assertCount(1, $data->exception->trace);
+        Assert::assertTrue(strpos($data->exception->trace[0], 'JsonErrorRendererTest->actionHandler') !== false);
     }
 
     public function actionHandler(Request $request): void
