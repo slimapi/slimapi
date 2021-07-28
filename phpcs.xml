@@ -1,10 +1,10 @@
 <ruleset name="PHP_CodeSniffer">
-    <rule ref="~/.composer/vendor/slimapi/coding-standard/src/ruleset.xml"/>
+  <rule ref="~/.composer/vendor/slimapi/coding-standard/src/ruleset.xml"/>
 
-    <arg name="cache"/>
-    <arg name="colors"/>
-    <arg value="sp"/>
+  <arg name="cache"/>
+  <arg name="colors"/>
+  <arg value="sp"/>
 
-    <file>src</file>
-    <file>tests</file>
+  <file>src</file>
+  <file>tests</file>
 </ruleset>

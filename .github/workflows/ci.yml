@@ -8,24 +8,39 @@ on:
       - '*'
 
   pull_request:
+  workflow_dispatch:
 
 jobs:
-  pipeline:
-    name: Build & Test
+  php74:
+    name: Build & Test (PHP 7.4)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Enable Docker Layer Caching
-        uses: satackey/action-docker-layer-caching@v0.0.8
+        uses: satackey/action-docker-layer-caching@v0.0.11
         continue-on-error: true
 
       - name: Build Docker Image
-        run: docker build --tag $GITHUB_SHA .
+        run: |
+          set -a
+          source "$GITHUB_WORKSPACE/.env"
+          set +a
+          echo "VERSION: $BASE_IMAGE_PHP74"
+          docker build --build-arg BASE_IMAGE="$BASE_IMAGE_PHP74" --tag "$GITHUB_SHA" .
 
       - name: Start Docker Container
-        run: docker run --detach --env ENVIRONMENT=ci --env TEST_ENV=test_env_val --name=$GITHUB_SHA $GITHUB_SHA
+        run: docker run --detach --env ENVIRONMENT=ci --env TEST_ENV=test_env_val --name="$GITHUB_SHA" "$GITHUB_SHA"
+
+      - name: Print Versions
+        run: |
+          echo "EditorConfig-Checker $(docker exec "$GITHUB_SHA" ec --version)"
+          docker exec "$GITHUB_SHA" php --version
+          docker exec "$GITHUB_SHA" composer --version
+          docker exec "$GITHUB_SHA" phpstan --version
+          docker exec "$GITHUB_SHA" phpcs --version
+          docker exec "$GITHUB_SHA" phpunit --version
 
       - name: EditorConfig-Checker
         run: docker exec $GITHUB_SHA composer ec
@@ -42,6 +57,55 @@ jobs:
           docker exec $GITHUB_SHA cat coverage.xml > coverage.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2.0.2
+        with:
+          fail_ci_if_error: true
+
+  php80:
+    name: Build & Test (PHP 8.0)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Enable Docker Layer Caching
+        uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+
+      - name: Build Docker Image
+        run: |
+          set -a
+          source "$GITHUB_WORKSPACE/.env"
+          set +a
+          docker build --build-arg BASE_IMAGE="$BASE_IMAGE_PHP80" --tag "$GITHUB_SHA" .
+
+      - name: Start Docker Container
+        run: docker run --detach --env ENVIRONMENT=ci --env TEST_ENV=test_env_val --name=$GITHUB_SHA $GITHUB_SHA
+
+      - name: Print Versions
+        run: |
+          echo "EditorConfig-Checker $(docker exec "$GITHUB_SHA" ec --version)"
+          docker exec "$GITHUB_SHA" php --version
+          docker exec "$GITHUB_SHA" composer --version
+          docker exec "$GITHUB_SHA" phpstan --version
+          docker exec "$GITHUB_SHA" phpcs --version
+          docker exec "$GITHUB_SHA" phpunit --version
+
+      - name: EditorConfig-Checker
+        run: docker exec $GITHUB_SHA composer ec
+
+      - name: PHP_CodeSniffer
+        run: docker exec $GITHUB_SHA composer phpcs -- --runtime-set php_version 70400
+
+      - name: PHPStan
+        run: docker exec $GITHUB_SHA composer phpstan
+
+      - name: PHPUnit
+        run: |
+          docker exec $GITHUB_SHA phpunit --coverage-clover coverage.xml
+          docker exec $GITHUB_SHA cat coverage.xml > coverage.xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2.0.2
         with:
           fail_ci_if_error: true

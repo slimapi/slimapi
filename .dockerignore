@@ -5,3 +5,4 @@
 !.editorconfig
 Dockerfile
 vendor
+vendor-global

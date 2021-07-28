@@ -13,11 +13,11 @@
         }
     },
     "require": {
-        "php": "^7.4",
+        "php": "^7.4 || ^8.0",
         "ext-json": "*",
         "nette/bootstrap": "^3.0",
-        "slim/slim": "^4.5",
-        "slimapi/psr7": "^1.1",
+        "slim/slim": "^4.8",
+        "slimapi/psr7": "^1.4",
         "justinrainbow/json-schema": "^5.2"
     },
     "require-dev": {

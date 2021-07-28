@@ -3,4 +3,5 @@ vendor/
 vendor-global/
 tmp/*
 !tmp/.gitkeep
+!.env
 composer.lock

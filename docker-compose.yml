@@ -3,7 +3,10 @@ version: "3.7"
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      args:
+        - BASE_IMAGE=${BASE_IMAGE_PHP74}
 
     volumes:
       - .:/var/www/:cached
