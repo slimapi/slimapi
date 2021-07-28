@@ -27,7 +27,6 @@ jobs:
           set -a
           source "$GITHUB_WORKSPACE/.env"
           set +a
-          echo "VERSION: $BASE_IMAGE_PHP74"
           docker build --build-arg BASE_IMAGE="$BASE_IMAGE_PHP74" --tag "$GITHUB_SHA" .
 
       - name: Start Docker Container
