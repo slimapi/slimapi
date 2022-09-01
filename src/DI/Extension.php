@@ -128,7 +128,8 @@ class Extension extends CompilerExtension
 
         $errorHandler = $builder->addDefinition($this->prefix('errorHandler'))
             ->setFactory($config->handler, [$callableResolver, $responseFactory])
-            ->addSetup('registerErrorRenderer', ['application/json', $errorRenderer]);
+            ->addSetup('registerErrorRenderer', ['application/json', $errorRenderer])
+            ->addSetup('setDefaultErrorRenderer', ['application/json', $errorRenderer]);
 
         $errorMiddleware = $builder->addDefinition($this->prefix('errorMiddleware'))
             ->setFactory($config->middleware, [
