@@ -11,23 +11,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Command extends BaseCommand
 {
-    protected static $defaultName = 'validation:generate'; // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint
+    private Generator $generator;
 
-    private ?Generator $generator = null;
-
-    public function setGenerator(Generator $generator): self
+    public function __construct(Generator $generator, string $name = 'validation:generate')
     {
+        parent::__construct($name);
         $this->generator = $generator;
-        return $this;
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        if ($this->generator === null) {
-            $output->writeln('<error>Missing generator, please use setGenerator() before command registration.</error>');
-            return 1;
-        }
-
         $this->generator->generateSchemaList();
         $output->writeln(sprintf(
             '<info>Validation schema (%s) has been generated.</info>',

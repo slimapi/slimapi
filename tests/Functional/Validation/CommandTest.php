@@ -16,8 +16,7 @@ class CommandTest extends TestCase
         self::cleanup();
         $generator = new DefaultGenerator(__DIR__ . '/fixtures/validation.bar.json', self::CACHE_DIR);
 
-        $command = new Command();
-        $command->setGenerator($generator);
+        $command = new Command($generator);
 
         $tester = new CommandTester($command);
         $tester->execute([]);
@@ -28,18 +27,5 @@ class CommandTest extends TestCase
 
         self::assertSame(0, $tester->getStatusCode());
         self::assertSame(sprintf('Validation schema (%s) has been generated.', $cacheFile), trim($tester->getDisplay()));
-    }
-
-    public function testExecuteWithoutGenerator(): void
-    {
-        $command = new Command();
-        $tester = new CommandTester($command);
-        $tester->execute([]);
-
-        self::assertSame(1, $tester->getStatusCode());
-        self::assertSame(
-            'Missing generator, please use setGenerator() before command registration.',
-            trim($tester->getDisplay()),
-        );
     }
 }
