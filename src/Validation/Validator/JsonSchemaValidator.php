@@ -49,7 +49,7 @@ class JsonSchemaValidator implements ValidatorInterface
 
     public function getErrorMessage(): string
     {
-        return 'JSON Schema Validation Error';
+        return 'JSON Schema validation error.';
     }
 
     public function getErrors(): array

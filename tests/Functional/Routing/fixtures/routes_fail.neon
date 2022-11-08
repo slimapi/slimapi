@@ -1,6 +1,6 @@
 slimapi:
-    errors:
-        debugMode: true
+  errors:
+    enableHandler: false
 
 routes:
   - [GET, /routes-test-fail, SlimAPI\Tests\Functional\Routing\ConfiguratorTest::fail]
