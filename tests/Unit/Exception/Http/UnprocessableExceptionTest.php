@@ -23,7 +23,7 @@ class UnprocessableExceptionTest extends TestCase
     {
         $e = new UnprocessableEntityException('CUSTOM_ERROR_DETECTED');
 
-        self::assertSame('Custom error detected', $e->getMessage());
+        self::assertSame('Custom error detected.', $e->getMessage());
         self::assertSame(422, $e->getCode());
         self::assertSame('CUSTOM_ERROR_DETECTED', $e->getError());
     }

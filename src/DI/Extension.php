@@ -17,8 +17,8 @@ use Slim\Psr7\Factory\ResponseFactory;
 use SlimAPI\App;
 use SlimAPI\AppFactory;
 use SlimAPI\Configurator\ChainConfigurator;
-use SlimAPI\Error\JsonErrorRenderer;
-use SlimAPI\Handlers\ErrorHandler;
+use SlimAPI\Error\Handler;
+use SlimAPI\Error\Renderer;
 use SlimAPI\Http\RequestFactory;
 use SlimAPI\Http\Response;
 
@@ -29,13 +29,16 @@ class Extension extends CompilerExtension
         return Expect::structure([
             'configurators' => Expect::array(),
             'errors' => Expect::structure([
-                'debugMode' => Expect::bool(false),
-                'displayErrorDetails' => Expect::bool(false),
-                'handler' => Expect::string(ErrorHandler::class),
-                'logErrorDetails' => Expect::bool(true),
-                'logErrors' => Expect::bool(true),
+                'displayDetails' => Expect::bool(false),
+                'enableHandler' => Expect::bool(true),
+                'handler' => Expect::string(Handler::class),
                 'middleware' => Expect::string(ErrorMiddleware::class),
-                'renderer' => Expect::string(JsonErrorRenderer::class),
+                'renderer' => Expect::string(Renderer::class),
+            ]),
+            'logs' => Expect::structure([
+                'displayDetails' => Expect::bool(false),
+                'enableLogger' => Expect::bool(true),
+                'renderer' => Expect::string(Renderer::class),
             ]),
         ]);
     }
@@ -113,8 +116,9 @@ class Extension extends CompilerExtension
 
     private function setupErrorHandling(): void
     {
-        $config = $this->config->errors; // @phpstan-ignore-line
-        if ($config->debugMode === true) {
+        $handlerConfig = $this->config->errors; // @phpstan-ignore-line
+        $loggerConfig = $this->config->logs; // @phpstan-ignore-line
+        if ($handlerConfig->enableHandler === false) {
             return;
         }
 
@@ -124,20 +128,24 @@ class Extension extends CompilerExtension
         $responseFactory = $builder->getDefinitionByType(ResponseFactory::class);
 
         $errorRenderer = $builder->addDefinition($this->prefix('errorRenderer'))
-            ->setFactory($config->renderer);
+            ->setFactory($handlerConfig->renderer);
+
+        $logErrorRenderer = $builder->addDefinition($this->prefix('logErrorRenderer'))
+            ->setFactory($loggerConfig->renderer);
 
         $errorHandler = $builder->addDefinition($this->prefix('errorHandler'))
-            ->setFactory($config->handler, [$callableResolver, $responseFactory])
+            ->setFactory($handlerConfig->handler, [$callableResolver, $responseFactory])
             ->addSetup('registerErrorRenderer', ['application/json', $errorRenderer])
-            ->addSetup('setDefaultErrorRenderer', ['application/json', $errorRenderer]);
+            ->addSetup('setDefaultErrorRenderer', ['application/json', $errorRenderer])
+            ->addSetup('setLogErrorRenderer', [$logErrorRenderer]);
 
         $errorMiddleware = $builder->addDefinition($this->prefix('errorMiddleware'))
-            ->setFactory($config->middleware, [
+            ->setFactory($handlerConfig->middleware, [
                 $callableResolver,
                 $responseFactory,
-                $config->displayErrorDetails,
-                $config->logErrors,
-                $config->logErrorDetails,
+                $handlerConfig->displayDetails,
+                $loggerConfig->enableLogger,
+                $loggerConfig->displayDetails,
             ])
             ->addSetup('setDefaultErrorHandler', [$errorHandler]);
 

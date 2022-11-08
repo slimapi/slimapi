@@ -1,6 +1,6 @@
 includes:
-    - error.neon
+  - error.neon
 
 slimapi:
-    errors:
-        displayErrorDetails: true
+  errors:
+    displayDetails: true

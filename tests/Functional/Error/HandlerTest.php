@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SlimAPI\Tests\Functional\Handlers;
+namespace SlimAPI\Tests\Functional\Error;
 
 use SlimAPI\App;
 use SlimAPI\Http\Response;
 use SlimAPI\Tests\Functional\TestCase;
 
-class ErrorHandlerTest extends TestCase
+class HandlerTest extends TestCase
 {
     /** @var App */
     protected static App $application;
@@ -23,7 +23,7 @@ class ErrorHandlerTest extends TestCase
     {
         self::cleanup();
 
-        $container = self::createContainer(__DIR__ . '/../Error/fixtures/error.neon');
+        $container = self::createContainer(__DIR__ . '/fixtures/error.neon');
         self::$application = $container->getByType(App::class);
     }
 

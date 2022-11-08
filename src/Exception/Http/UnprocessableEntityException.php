@@ -12,7 +12,7 @@ class UnprocessableEntityException extends Exception
     public function __construct(string $error, ?string $message = null, ?Throwable $previous = null)
     {
         if ($message === null) {
-            $message = ucfirst(strtolower(str_replace('_', ' ', $error)));
+            $message = ucfirst(strtolower(str_replace('_', ' ', $error))) . '.';
         }
 
         parent::__construct($message, StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY, $error, [], $previous);

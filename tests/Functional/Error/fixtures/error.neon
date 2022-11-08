@@ -1,12 +1,16 @@
 slimapi:
-    errors:
-        logErrors: false
+  logs:
+    displayDetails: true
 
 routes:
-  - [GET, /error/slim-http, SlimAPI\Tests\Functional\Error\JsonErrorRendererTest::handler]
-  - [GET, /error/validation-request, SlimAPI\Tests\Functional\Error\JsonErrorRendererTest::handler]
-  - [GET, /error/slimapi-http, SlimAPI\Tests\Functional\Error\JsonErrorRendererTest::handler]
-  - [GET, /error/unexpeced, SlimAPI\Tests\Functional\Error\JsonErrorRendererTest::handler]
+  - [GET, /error/slim-http, SlimAPI\Tests\Functional\Error\RendererTest::handler]
+  - [GET, /error/validation-request, SlimAPI\Tests\Functional\Error\RendererTest::handler]
+  - [GET, /error/slimapi-http, SlimAPI\Tests\Functional\Error\RendererTest::handler]
+  - [GET, /error/unexpeced, SlimAPI\Tests\Functional\Error\RendererTest::handler]
 
 services:
-    - SlimAPI\Tests\Functional\Error\JsonErrorRendererTest
+  - SlimAPI\Tests\Functional\Error\RendererTest
+
+  logger:
+    type: Psr\Log\LoggerInterface
+    factory: SlimAPI\Tests\Functional\Error\fixtures\TestLogger

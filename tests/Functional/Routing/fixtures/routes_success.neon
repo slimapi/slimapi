@@ -1,10 +1,10 @@
 slimapi:
-    errors:
-        debugMode: true
+  errors:
+    enableHandler: false
 
 routes:
-    - [GET, /routes-test, SlimAPI\Tests\Functional\Routing\ConfiguratorTest::testSuccess, {route_settings: foo}]
-    routeName: [POST, /routes-test-2, SlimAPI\Tests\Functional\Routing\ConfiguratorTest::testSuccess, {route_settings: bar, important-settings: {foo: bar}}]
+  - [GET, /routes-test, SlimAPI\Tests\Functional\Routing\ConfiguratorTest::testSuccess, {route_settings: foo}]
+  routeName: [POST, /routes-test-2, SlimAPI\Tests\Functional\Routing\ConfiguratorTest::testSuccess, {route_settings: bar, important-settings: {foo: bar}}]
 
 services:
   - SlimAPI\Tests\Functional\Routing\ConfiguratorTest

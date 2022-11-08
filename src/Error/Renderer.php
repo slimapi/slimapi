@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SlimAPI\Error;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Slim\Error\AbstractErrorRenderer;
 use Slim\Exception\HttpException;
 use SlimAPI\Exception\Http\Exception;
 use SlimAPI\Exception\Http\Generator;
@@ -13,9 +12,11 @@ use SlimAPI\Exception\Validation\RequestException;
 use SlimAPI\Routing\Configurator;
 use Throwable;
 
-class JsonErrorRenderer extends AbstractErrorRenderer
+class Renderer implements RendererInterface
 {
     use Generator;
+
+    protected string $defaultErrorTitle = 'SlimAPI application error.';
 
     protected function generateError(Throwable $exception): array
     {
@@ -46,7 +47,7 @@ class JsonErrorRenderer extends AbstractErrorRenderer
             $error = [
                 'code' => StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR,
                 'error' => 'INTERNAL_SERVER_ERROR',
-                'message' => 'SlimAPI Application Error',
+                'message' => $this->defaultErrorTitle,
             ];
         }
 
@@ -54,7 +55,7 @@ class JsonErrorRenderer extends AbstractErrorRenderer
         return $error;
     }
 
-    private function traceParse(Throwable $exception): array
+    protected function traceParse(Throwable $exception): array
     {
         $data = [];
         foreach (explode(PHP_EOL, $exception->getTraceAsString()) as $trace) {
@@ -68,7 +69,13 @@ class JsonErrorRenderer extends AbstractErrorRenderer
         return $data;
     }
 
-    public function __invoke(Throwable $exception, bool $displayErrorDetails): string
+    /**
+     * @param Throwable $exception
+     * @param bool $displayErrorDetails
+     * @param bool $displayAsString
+     * @return array|string
+     */
+    public function __invoke(Throwable $exception, bool $displayErrorDetails, bool $displayAsString = true)
     {
         $error = $this->generateError($exception);
 
@@ -83,6 +90,8 @@ class JsonErrorRenderer extends AbstractErrorRenderer
             ];
         }
 
-        return (string) json_encode($error, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        return $displayAsString
+            ? (string) json_encode($error, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)
+            : $error;
     }
 }
