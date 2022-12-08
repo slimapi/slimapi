@@ -142,6 +142,82 @@ class RequestHelperTest extends TestCase
         self::assertSame('a', $request->getHeaderLine('X-Bar'));
     }
 
+    public function testCreateRequestPatch(): void
+    {
+        $request = $this->createRequestPatch('/req-helper-test/patch', ['data' => 'foo']);
+        self::assertSame('PATCH', $request->getMethod());
+        self::assertSame('application/json', $request->getHeader('Accept')[0]);
+        self::assertSame('/req-helper-test/patch', $request->getUri()->getPath());
+        self::assertSame('{"data":"foo"}', (string) $request->getBody());
+    }
+
+    public function testCreateRequestPatchDataStdClass(): void
+    {
+        $request = $this->createRequestPatch('/req-helper-test/patch-stdclass', (object) ['data' => 'foo']);
+        self::assertSame('PATCH', $request->getMethod());
+        self::assertSame('application/json', $request->getHeader('Accept')[0]);
+        self::assertSame('/req-helper-test/patch-stdclass', $request->getUri()->getPath());
+        self::assertSame('{"data":"foo"}', (string) $request->getBody());
+    }
+
+    public function testCreateRequestPatchDataJsonSerializable(): void
+    {
+        $json = new class implements JsonSerializable
+        {
+            private string $data = 'foo';
+
+            public function jsonSerialize(): array
+            {
+                return get_object_vars($this);
+            }
+        };
+
+        $request = $this->createRequestPatch('/req-helper-test/patch-json-serializable', $json);
+        self::assertSame('PATCH', $request->getMethod());
+        self::assertSame('application/json', $request->getHeader('Accept')[0]);
+        self::assertSame('/req-helper-test/patch-json-serializable', $request->getUri()->getPath());
+        self::assertSame('{"data":"foo"}', (string) $request->getBody());
+    }
+
+    public function testCreateRequestPatchDataFail(): void
+    {
+        self::expectException(InvalidArgumentException::class);
+
+        $obj = new class
+        {
+            // @phpstan-ignore-next-line
+            private string $data = 'foo'; // phpcs:ignore SlevomatCodingStandard.Classes.UnusedPrivateElements
+        };
+
+        $this->createRequestPost('/req-helper-test/patch-data-fail', $obj); // @phpstan-ignore-line
+    }
+
+    public function testCreateRequestPatchWithQuery(): void
+    {
+        $request = $this->createRequestPatch('/req-helper-test/patch/query', ['foo' => 'bar'], ['bar' => 'bar']);
+        self::assertSame('PATCH', $request->getMethod());
+        self::assertSame('application/json', $request->getHeader('Accept')[0]);
+        self::assertSame('/req-helper-test/patch/query', $request->getUri()->getPath());
+        self::assertSame('{"foo":"bar"}', (string) $request->getBody());
+        self::assertSame(['bar' => 'bar'], $request->getQueryParams());
+    }
+
+    public function testCreateRequestPatchWithQueryAndHeaders(): void
+    {
+        $request = $this->createRequestPatch(
+            '/req-helper-test/patch/query-headers',
+            ['x' => 'y'],
+            ['z' => 'z'],
+            ['X-Bar' => 'a'],
+        );
+        self::assertSame('PATCH', $request->getMethod());
+        self::assertSame('application/json', $request->getHeader('Accept')[0]);
+        self::assertSame('/req-helper-test/patch/query-headers', $request->getUri()->getPath());
+        self::assertSame('{"x":"y"}', (string) $request->getBody());
+        self::assertSame(['z' => 'z'], $request->getQueryParams());
+        self::assertSame('a', $request->getHeaderLine('X-Bar'));
+    }
+
     public function testCreateRequestDelete(): void
     {
         $request = $this->createRequestDelete('/req-helper-test/delete');
