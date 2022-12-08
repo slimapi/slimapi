@@ -45,6 +45,18 @@ trait RequestHelper
         return $this->createRequest('PUT', $path, $query, $data, $headers);
     }
 
+    /**
+     * @param string $path
+     * @param array|stdClass|JsonSerializable $data
+     * @param array $query
+     * @param array $headers
+     * @return Request
+     */
+    protected function createRequestPatch(string $path, $data, array $query = [], array $headers = []): Request
+    {
+        return $this->createRequest('PATCH', $path, $query, $data, $headers);
+    }
+
     protected function createRequestDelete(string $path, array $query = [], array $headers = []): Request
     {
         return $this->createRequest('DELETE', $path, $query, null, $headers);
