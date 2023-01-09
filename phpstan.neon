@@ -14,3 +14,6 @@ parameters:
       # https://github.com/phpstan/phpstan/issues/4121
       message: '#Strict comparison|ternary#'
       path: src/Http/Message.php
+    -
+      message: '#Parameter \#3 \$depth#'
+      path: src/Http/Message.php

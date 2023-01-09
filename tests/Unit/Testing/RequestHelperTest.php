@@ -84,6 +84,7 @@ class RequestHelperTest extends TestCase
 
         $obj = new class
         {
+            // @phpstan-ignore-next-line
             private string $data = 'foo'; // phpcs:ignore SlevomatCodingStandard.Classes.UnusedPrivateElements
         };
 

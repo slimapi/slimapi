@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace SlimAPI\Bootstrap;
 
+use Nette\Bootstrap\Extensions\PhpExtension;
 use Nette\Configurator as BaseConfigurator;
 use Nette\DI\Config\Loader;
 use Nette\DI\Extensions\DecoratorExtension;
 use Nette\DI\Extensions\ExtensionsExtension;
-use Nette\DI\Extensions\PhpExtension;
 use SlimAPI\DI\Extension as SlimApiExtension;
 use SlimAPI\DI\NeonAdapter;
 use SlimAPI\Routing\Extension as RoutesExtension;

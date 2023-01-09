@@ -56,7 +56,7 @@ jobs:
           docker exec $GITHUB_SHA cat coverage.xml > coverage.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2.0.2
+        uses: codecov/codecov-action@v3.1.1
         with:
           fail_ci_if_error: true
 
@@ -105,6 +105,6 @@ jobs:
           docker exec $GITHUB_SHA cat coverage.xml > coverage.xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2.0.2
+        uses: codecov/codecov-action@v3.1.1
         with:
           fail_ci_if_error: true

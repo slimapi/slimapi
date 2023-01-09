@@ -28,5 +28,5 @@ services:
   - SlimAPI\Validation\Factory(%appDir%/Validation/fixtures/*.json, %tempDir%/cache, %strictValidation%)
 
   -
-    class: SlimAPI\Validation\Configurator
+    type: SlimAPI\Validation\Configurator
     factory: @SlimAPI\Validation\Factory::createConfigurator()

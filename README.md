@@ -29,7 +29,7 @@ See [LICENSE][link-license] file for more information.
 [link-release]: https://github.com/slimapi/slimapi/releases
 [link-slim]: http://www.slimframework.com
 
-[img-build]: https://img.shields.io/github/workflow/status/slimapi/slimapi/Continuous%20Integration/master?style=flat-square&label=Build
+[img-build]: https://img.shields.io/github/actions/workflow/status/slimapi/slimapi/.github/workflows/ci.yml?branch=master&style=flat-square&label=Build
 [img-coverage]: https://img.shields.io/codecov/c/github/slimapi/slimapi/master?style=flat-square&label=Coverage
 [img-license]: https://img.shields.io/github/license/slimapi/slimapi?style=flat-square&label=License&color=blue
 [img-phpstan]: https://img.shields.io/badge/style-%208%20%28strict%29-brightgreen.svg?&label=PHPStan&style=flat-square
