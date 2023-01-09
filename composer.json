@@ -15,20 +15,20 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
-        "nette/bootstrap": "^3.0",
-        "slim/slim": "^4.8",
+        "nette/bootstrap": "^3.1",
+        "slim/slim": "^4.11",
         "slimapi/psr7": "^1.4",
         "justinrainbow/json-schema": "^5.2"
     },
     "require-dev": {
-        "tracy/tracy": "^2.7",
-        "symfony/console": "^5.1",
-        "adriansuter/php-autoload-override": "^1.2"
+        "tracy/tracy": "^2.9",
+        "symfony/console": "^5.4.17 || ^6.0",
+        "adriansuter/php-autoload-override": "^1.4"
     },
     "scripts": {
         "ec": "ec",
         "phpcbf": "phpcbf",
-        "phpcs": "phpcs",
+        "phpcs": "phpcs --exclude=SlevomatCodingStandard.Classes.RequireAbstractOrFinal",
         "phpstan": "phpstan --ansi --configuration=phpstan.neon analyse src/ tests/",
         "phpunit": "phpunit --no-coverage",
         "phpunit-coverage": "phpunit",

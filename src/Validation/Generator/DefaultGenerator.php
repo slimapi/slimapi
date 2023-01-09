@@ -71,7 +71,7 @@ class DefaultGenerator implements GeneratorInterface
             }
         }
 
-        return $this->schemaList; // @phpstan-ignore-line
+        return $this->schemaList;
     }
 
     public function getCacheFileName(): string

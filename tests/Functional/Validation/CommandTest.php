@@ -22,7 +22,7 @@ class CommandTest extends TestCase
         $tester->execute([]);
 
         $cacheFile = $generator->getCacheFileName();
-        $validation = include_once $cacheFile;
+        $validation = include $cacheFile;
         self::assertCount(5, $validation, 'Expected only validation.bar.json');
 
         self::assertSame(0, $tester->getStatusCode());
