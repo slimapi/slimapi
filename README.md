@@ -15,8 +15,8 @@ $ composer require slimapi/slimapi
 
 ## Local Development & Testing
 ```bash
-$ docker-compose up
-$ docker-compose exec app composer.sh test
+$ docker compose up
+$ docker compose exec app composer.sh test
 ```
 > **NOTE**: Available on http://localhost:8080. You can change the port in [docker-compose.yml](docker-compose.yml)
 
