@@ -4,28 +4,16 @@ declare(strict_types=1);
 
 namespace SlimAPI\Routing;
 
-use Slim\Routing\Route as BaseRoute;
-
-class Route extends BaseRoute
+class Route extends \Slim\Routing\Route
 {
     protected array $attributes;
 
-    /**
-     * @param string $name
-     * @param mixed $default
-     * @return mixed|null
-     */
-    public function getAttribute(string $name, $default = null)
+    public function getAttribute(string $name, mixed $default = null): mixed
     {
         return $this->attributes[$name] ?? $default;
     }
 
-    /**
-     * @param string $name
-     * @param mixed $value
-     * @return Route
-     */
-    public function setAttribute(string $name, $value): self
+    public function setAttribute(string $name, mixed $value): self
     {
         $this->attributes[$name] = $value;
         return $this;
@@ -33,8 +21,6 @@ class Route extends BaseRoute
 
     /**
      * Get route settings from route definition.
-     * @return Settings
-     * @php
      */
     public function getSettings(): Settings
     {

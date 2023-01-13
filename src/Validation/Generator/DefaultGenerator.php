@@ -12,8 +12,7 @@ class DefaultGenerator implements GeneratorInterface
 
     private string $cacheDir;
 
-    /** @var array|false */
-    private $schemaList;
+    private array|false|null $schemaList = null;
 
     /**
      * @param string $sourceMask The path where validation schema *.JSON files are stored

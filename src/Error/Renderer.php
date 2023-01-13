@@ -59,7 +59,7 @@ class Renderer implements RendererInterface
     {
         $data = [];
         foreach (explode(PHP_EOL, $exception->getTraceAsString()) as $trace) {
-            if (strpos($trace, Configurator::class) !== false) {
+            if (str_contains($trace, Configurator::class)) {
                 break;
             }
 
@@ -69,13 +69,7 @@ class Renderer implements RendererInterface
         return $data;
     }
 
-    /**
-     * @param Throwable $exception
-     * @param bool $displayErrorDetails
-     * @param bool $displayAsString
-     * @return array|string
-     */
-    public function __invoke(Throwable $exception, bool $displayErrorDetails, bool $displayAsString = true)
+    public function __invoke(Throwable $exception, bool $displayErrorDetails, bool $displayAsString = true): array|string
     {
         $error = $this->generateError($exception);
 
@@ -85,7 +79,7 @@ class Renderer implements RendererInterface
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
                 'message' => $exception->getMessage(),
-                'type' => get_class($exception),
+                'type' => $exception::class,
                 'trace' => $this->traceParse($exception),
             ];
         }

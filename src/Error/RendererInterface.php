@@ -8,11 +8,5 @@ use Throwable;
 
 interface RendererInterface
 {
-    /**
-     * @param Throwable $exception
-     * @param bool $displayErrorDetails
-     * @param bool $displayAsString
-     * @return mixed
-     */
-    public function __invoke(Throwable $exception, bool $displayErrorDetails, bool $displayAsString);
+    public function __invoke(Throwable $exception, bool $displayErrorDetails, bool $displayAsString): mixed;
 }

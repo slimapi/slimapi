@@ -6,13 +6,9 @@ namespace SlimAPI\Validation;
 
 class Mapper
 {
-    /** @var bool|string|null */
-    private $value;
+    private bool|string|null $value = null;
 
-    /**
-     * @param bool|string|null $value
-     */
-    public function __construct($value)
+    public function __construct(bool|string|null $value)
     {
         $this->value = $value;
     }
@@ -22,10 +18,7 @@ class Mapper
         return $this->value === false;
     }
 
-    /**
-     * @return bool|string|null
-     */
-    public function getValue()
+    public function getValue(): bool|string|null
     {
         return $this->value;
     }

@@ -41,8 +41,8 @@ class JsonSchemaValidatorTest extends TestCase
 
     public function testGetErrorsWithoutCallingIsValid(): void
     {
-        self::expectException(LogicException::class);
-        self::expectExceptionMessage('Missing method call SlimAPI\Validation\Validator\JsonSchemaValidator:isValid().');
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Missing method call SlimAPI\Validation\Validator\JsonSchemaValidator:isValid().');
         (new JsonSchemaValidator())->getErrors();
     }
 }

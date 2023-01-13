@@ -13,12 +13,7 @@ interface ValidatorInterface
     public const TYPE_REQUEST = 'request';
     public const TYPE_RESPONSE = 'response';
 
-    /**
-     * @param mixed $data
-     * @param stdClass $schema
-     * @return bool
-     */
-    public function isValid($data, stdClass $schema): bool;
+    public function isValid(mixed $data, stdClass $schema): bool;
 
     public function getErrorMessage(): string;
 

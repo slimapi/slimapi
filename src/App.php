@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SlimAPI;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Slim\App as BaseApp;
 use Slim\ResponseEmitter;
 use SlimAPI\Configurator\ChainConfigurator;
 use SlimAPI\DI\ContainerAdapter;
@@ -15,7 +14,7 @@ use SlimAPI\Http\Response;
  * @method ContainerAdapter getContainer()
  * @method Response handle(ServerRequestInterface $request)
  */
-class App extends BaseApp
+class App extends \Slim\App
 {
     public function run(?ServerRequestInterface $request = null): void
     {

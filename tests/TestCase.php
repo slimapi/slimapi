@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace SlimAPI\Tests;
 
-use PHPUnit\Framework\TestCase as BaseTestCase;
-
-abstract class TestCase extends BaseTestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected const CACHE_DIR = __DIR__ . '/../tmp/cache';
 

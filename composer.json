@@ -1,6 +1,6 @@
 {
     "name": "slimapi/slimapi",
-    "description": "SlimAPI",
+    "description": "A collection of tools for building JSON API(s)",
     "license": "MIT",
     "autoload": {
         "psr-4": {
@@ -13,22 +13,22 @@
         }
     },
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.1",
         "ext-json": "*",
-        "nette/bootstrap": "^3.1",
+        "nette/bootstrap": "^3.2",
         "slim/slim": "^4.11",
         "slimapi/psr7": "^1.4",
         "justinrainbow/json-schema": "^5.2"
     },
     "require-dev": {
-        "tracy/tracy": "^2.9",
-        "symfony/console": "^5.4.17 || ^6.0",
-        "adriansuter/php-autoload-override": "^1.4"
+        "tracy/tracy": "2.9.5",
+        "symfony/console": "6.2.3",
+        "adriansuter/php-autoload-override": "1.4"
     },
     "scripts": {
         "ec": "ec",
         "phpcbf": "phpcbf",
-        "phpcs": "phpcs --exclude=SlevomatCodingStandard.Classes.RequireAbstractOrFinal",
+        "phpcs": "phpcs",
         "phpstan": "phpstan --ansi --configuration=phpstan.neon analyse src/ tests/",
         "phpunit": "phpunit --no-coverage",
         "phpunit-coverage": "phpunit",

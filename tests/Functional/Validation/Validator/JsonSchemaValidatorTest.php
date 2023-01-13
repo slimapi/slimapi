@@ -33,8 +33,8 @@ class JsonSchemaValidatorTest extends TestCase
         $container = self::createContainer(__DIR__ . '/../fixtures/validation.neon');
         $application = $container->getByType(App::class);
 
-        self::expectException(RequestException::class);
-        self::expectExceptionMessage(sprintf(
+        $this->expectException(RequestException::class);
+        $this->expectExceptionMessage(sprintf(
             '[{"property":"","message":"%s","constraint":"additionalProp"}]',
             'The property fooProperty is not defined and the definition does not allow additional properties',
         ));

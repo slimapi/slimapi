@@ -8,7 +8,7 @@ use AdrianSuter\Autoload\Override\Override;
 use SlimAPI\Http\Message;
 use SlimAPI\Tests\TestCase;
 
-$classLoader = require_once __DIR__ . '/../vendor/autoload.php';
+$classLoader = require __DIR__ . '/../vendor/autoload.php';
 
 Override::apply($classLoader, [
     Message::class => [

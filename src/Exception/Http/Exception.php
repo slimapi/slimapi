@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace SlimAPI\Exception\Http;
 
-use SlimAPI\Exception\Exception as BaseException;
 use Throwable;
 
-class Exception extends BaseException
+class Exception extends \SlimAPI\Exception\Exception
 {
     use Generator;
 

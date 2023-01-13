@@ -26,8 +26,8 @@ class RequestTest extends TestCase
         $request = $this->createRequest();
         $request->getBody()->write('{');
 
-        self::expectException(JsonException::class);
-        self::expectExceptionMessage('Syntax error');
+        $this->expectException(JsonException::class);
+        $this->expectExceptionMessage('Syntax error');
         $request->getJson();
     }
 
@@ -35,8 +35,8 @@ class RequestTest extends TestCase
     {
         $request = $this->createRequest();
 
-        self::expectException(BadRequestException::class);
-        self::expectExceptionMessage('Empty body cannot be parsed.');
+        $this->expectException(BadRequestException::class);
+        $this->expectExceptionMessage('Empty body cannot be parsed.');
         $request->getJson();
     }
 
@@ -44,8 +44,8 @@ class RequestTest extends TestCase
     {
         $request = $this->createRequest();
 
-        self::expectException(LogicException::class);
-        self::expectExceptionMessage('No matched route. Missing call $app->addRoutingMiddleware()?');
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('No matched route. Missing call $app->addRoutingMiddleware()?');
         $request->getRoute();
     }
 

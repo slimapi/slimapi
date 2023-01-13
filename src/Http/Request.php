@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace SlimAPI\Http;
 
 use Psr\Http\Message\StreamInterface;
-use Slim\Psr7\Request as BaseRequest;
 use Slim\Routing\RouteContext;
 use SlimAPI\Exception\LogicException;
 use SlimAPI\Routing\Route;
@@ -15,7 +14,7 @@ use SlimAPI\Routing\Route;
  * @method Request withBody(StreamInterface $body)
  * @method Request withHeader(string $name, mixed $value)
  */
-class Request extends BaseRequest
+class Request extends \Slim\Psr7\Request
 {
     use Message;
 

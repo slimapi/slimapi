@@ -12,7 +12,6 @@ use SlimAPI\Tests\Functional\TestCase;
 
 class ResponseMiddlewareTest extends TestCase
 {
-    /** @var App */
     protected static App $application;
 
     public function testValidationSuccess(): void
@@ -27,8 +26,8 @@ class ResponseMiddlewareTest extends TestCase
 
     public function testValidationFail(): void
     {
-        self::expectException(ResponseException::class);
-        self::expectExceptionMessage(sprintf(
+        $this->expectException(ResponseException::class);
+        $this->expectExceptionMessage(sprintf(
             '[' .
                 '{"property":"","message":"%s","constraint":"additionalProp"},' .
                 '{"property":"","message":"%s","constraint":"additionalProp"}' .
@@ -36,7 +35,7 @@ class ResponseMiddlewareTest extends TestCase
             'The property pattern is not defined and the definition does not allow additional properties',
             'The property query is not defined and the definition does not allow additional properties',
         ));
-        self::expectExceptionCode(500);
+        $this->expectExceptionCode(500);
         self::$application->handle($this->createRequestGet('/bar/v1/fail'));
     }
 

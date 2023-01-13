@@ -6,7 +6,7 @@ services:
     build:
       context: .
       args:
-        - BASE_IMAGE=${BASE_IMAGE_PHP74}
+        - BASE_IMAGE=${BASE_IMAGE_PHP81}
 
     volumes:
       - .:/var/www/:cached

@@ -7,9 +7,8 @@ namespace SlimAPI\Tests\Functional;
 use Nette\DI\Container;
 use SlimAPI\Bootstrap\Configurator;
 use SlimAPI\Testing\RequestHelper;
-use SlimAPI\Tests\TestCase as BaseTestCase;
 
-class TestCase extends BaseTestCase
+class TestCase extends \SlimAPI\Tests\TestCase
 {
     use RequestHelper;
 

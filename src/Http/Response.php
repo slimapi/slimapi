@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace SlimAPI\Http;
 
 use Fig\Http\Message\StatusCodeInterface;
-use Slim\Psr7\Response as BaseResponse;
 
 /**
  * @method Response withHeader(string $name, mixed $value);
  * @method Response withStatus(int $code, string $reasonPhrase = '');
  */
-class Response extends BaseResponse
+class Response extends \Slim\Psr7\Response
 {
     use Message;
 
@@ -21,8 +20,6 @@ class Response extends BaseResponse
 
     /**
      * Write data to the response body.
-     * @param string $data
-     * @return $this
      */
     public function write(string $data): self
     {
@@ -32,10 +29,6 @@ class Response extends BaseResponse
 
     /**
      * Return an instance with the data encoded as JSON with suitable "Content-Type" header.
-     * @param array $data
-     * @param int $status
-     * @param int $options
-     * @return self
      */
     public function withJson(array $data, int $status = StatusCodeInterface::STATUS_OK, int $options = JSON_THROW_ON_ERROR): self
     {
@@ -51,21 +44,16 @@ class Response extends BaseResponse
 
     /**
      * Return an instance with status code 204.
-     * @return self
      */
     public function withNoContent(): self
     {
-        $clone = clone $this;
-        return $clone->withStatus(StatusCodeInterface::STATUS_NO_CONTENT);
+        return (clone $this)->withStatus(StatusCodeInterface::STATUS_NO_CONTENT);
     }
 
     /**
      * Return an instance with the specified derived request attribute.
-     * @param string $name
-     * @param mixed $value
-     * @return self
      */
-    public function withAttribute(string $name, $value): self
+    public function withAttribute(string $name, mixed $value): self
     {
         $clone = clone $this;
         $clone->attributes[$name] = $value;
@@ -75,28 +63,22 @@ class Response extends BaseResponse
 
     /**
      * Skip validation for this response.
-     * @return self
      */
     public function skipValidation(): self
     {
-        $clone = clone $this;
-        return $clone->withAttribute(self::ATTRIBUTE_SKIP_VALIDATION, true);
+        return (clone $this)->withAttribute(self::ATTRIBUTE_SKIP_VALIDATION, true);
     }
 
     /**
      * Retrieve a single derived request attribute.
-     * @param string $name
-     * @param mixed $default
-     * @return mixed|null
      */
-    public function getAttribute(string $name, $default = null)
+    public function getAttribute(string $name, mixed $default = null): mixed
     {
         return $this->attributes[$name] ?? $default;
     }
 
     /**
      * Is this response OK?
-     * @return bool
      */
     public function isOk(): bool
     {
@@ -105,7 +87,6 @@ class Response extends BaseResponse
 
     /**
      * Is this response successful?
-     * @return bool
      */
     public function isSuccessful(): bool
     {

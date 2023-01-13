@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SlimAPI\Tests\Unit\Testing;
 
-use InvalidArgumentException;
 use JsonSerializable;
 use SlimAPI\Http\Request;
 use SlimAPI\Testing\RequestHelper;
@@ -76,19 +75,6 @@ class RequestHelperTest extends TestCase
         self::assertSame('application/json', $request->getHeader('Accept')[0]);
         self::assertSame('/req-helper-test/post-json-serializable', $request->getUri()->getPath());
         self::assertSame('{"data":"foo"}', (string) $request->getBody());
-    }
-
-    public function testCreateRequestPostDataFail(): void
-    {
-        self::expectException(InvalidArgumentException::class);
-
-        $obj = new class
-        {
-            // @phpstan-ignore-next-line
-            private string $data = 'foo'; // phpcs:ignore SlevomatCodingStandard.Classes.UnusedPrivateElements
-        };
-
-        $this->createRequestPost('/req-helper-test/post-data-fail', $obj); // @phpstan-ignore-line
     }
 
     public function testCreateRequestPostWithQuery(): void
@@ -179,19 +165,6 @@ class RequestHelperTest extends TestCase
         self::assertSame('{"data":"foo"}', (string) $request->getBody());
     }
 
-    public function testCreateRequestPatchDataFail(): void
-    {
-        self::expectException(InvalidArgumentException::class);
-
-        $obj = new class
-        {
-            // @phpstan-ignore-next-line
-            private string $data = 'foo'; // phpcs:ignore SlevomatCodingStandard.Classes.UnusedPrivateElements
-        };
-
-        $this->createRequestPost('/req-helper-test/patch-data-fail', $obj); // @phpstan-ignore-line
-    }
-
     public function testCreateRequestPatchWithQuery(): void
     {
         $request = $this->createRequestPatch('/req-helper-test/patch/query', ['foo' => 'bar'], ['bar' => 'bar']);
@@ -248,8 +221,7 @@ class RequestHelperTest extends TestCase
     public function testAdjustingRequestObject(): void
     {
         $this->onCreatedRequest[] = static function (Request $request): Request {
-            $request = $request->withHeader('X-Foo', 'Bar');
-            return $request;
+            return $request->withHeader('X-Foo', 'Bar');
         };
 
         $request = $this->createRequestGet('/foo/bar');

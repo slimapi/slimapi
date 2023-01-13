@@ -11,9 +11,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  php74:
-    name: Build & Test (PHP 7.4)
-    runs-on: ubuntu-latest
+  php81:
+    name: Build & Test (PHP 8.1)
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -27,7 +27,7 @@ jobs:
           set -a
           source "$GITHUB_WORKSPACE/.env"
           set +a
-          docker build --build-arg BASE_IMAGE="$BASE_IMAGE_PHP74" --tag "$GITHUB_SHA" .
+          docker build --build-arg BASE_IMAGE="$BASE_IMAGE_PHP81" --tag "$GITHUB_SHA" .
 
       - name: Start Docker Container
         run: docker run --detach --env ENVIRONMENT=ci --env TEST_ENV=test_env_val --name="$GITHUB_SHA" "$GITHUB_SHA"
@@ -42,13 +42,13 @@ jobs:
           docker exec "$GITHUB_SHA" phpunit --version
 
       - name: EditorConfig-Checker
-        run: docker exec $GITHUB_SHA composer ec
+        run: docker exec $GITHUB_SHA composer.sh ec
 
       - name: PHP_CodeSniffer
-        run: docker exec $GITHUB_SHA composer phpcs
+        run: docker exec $GITHUB_SHA composer.sh phpcs
 
       - name: PHPStan
-        run: docker exec $GITHUB_SHA composer phpstan
+        run: docker exec $GITHUB_SHA composer.sh phpstan
 
       - name: PHPUnit
         run: |
@@ -60,9 +60,9 @@ jobs:
         with:
           fail_ci_if_error: true
 
-  php80:
-    name: Build & Test (PHP 8.0)
-    runs-on: ubuntu-latest
+  php82:
+    name: Build & Test (PHP 8.2)
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -76,10 +76,10 @@ jobs:
           set -a
           source "$GITHUB_WORKSPACE/.env"
           set +a
-          docker build --build-arg BASE_IMAGE="$BASE_IMAGE_PHP80" --tag "$GITHUB_SHA" .
+          docker build --build-arg BASE_IMAGE="$BASE_IMAGE_PHP82" --tag "$GITHUB_SHA" .
 
       - name: Start Docker Container
-        run: docker run --detach --env ENVIRONMENT=ci --env TEST_ENV=test_env_val --name=$GITHUB_SHA $GITHUB_SHA
+        run: docker run --detach --env ENVIRONMENT=ci --env TEST_ENV=test_env_val --name="$GITHUB_SHA" "$GITHUB_SHA"
 
       - name: Print Versions
         run: |
@@ -91,13 +91,13 @@ jobs:
           docker exec "$GITHUB_SHA" phpunit --version
 
       - name: EditorConfig-Checker
-        run: docker exec $GITHUB_SHA composer ec
+        run: docker exec $GITHUB_SHA composer.sh ec
 
       - name: PHP_CodeSniffer
-        run: docker exec $GITHUB_SHA composer phpcs -- --runtime-set php_version 70400
+        run: docker exec $GITHUB_SHA composer.sh phpcs
 
       - name: PHPStan
-        run: docker exec $GITHUB_SHA composer phpstan
+        run: docker exec $GITHUB_SHA composer.sh phpstan
 
       - name: PHPUnit
         run: |

@@ -25,12 +25,7 @@ class JsonSchemaValidator implements ValidatorInterface
         $this->strict = $strict;
     }
 
-    /**
-     * @param mixed $data
-     * @param stdClass $schema
-     * @return bool
-     */
-    public function isValid($data, stdClass $schema): bool
+    public function isValid(mixed $data, stdClass $schema): bool
     {
         $this->validator = new Validator();
 
@@ -60,8 +55,7 @@ class JsonSchemaValidator implements ValidatorInterface
 
         $errors = [];
         foreach ($this->validator->getErrors() as $e) {
-            unset($e['pointer']);
-            unset($e['context']);
+            unset($e['pointer'], $e['context']);
             $errors[] = $e;
         }
 

@@ -18,7 +18,6 @@ use SlimAPI\Validation\Validator\JsonSchemaValidator;
 
 class RendererTest extends TestCase
 {
-    /** @var App */
     protected static App $application;
 
     public function setUp(): void

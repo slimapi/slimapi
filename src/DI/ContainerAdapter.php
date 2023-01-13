@@ -32,20 +32,12 @@ class ContainerAdapter implements ContainerInterface
         $this->container = $container;
     }
 
-    /**
-     * @param mixed $id
-     * @return mixed|object
-     */
-    public function get($id)
+    public function get(mixed $id): mixed
     {
         return $this->container->getService($this->prefix($id));
     }
 
-    /**
-     * @param mixed $id
-     * @return bool
-     */
-    public function has($id): bool
+    public function has(mixed $id): bool
     {
         return $this->container->hasService($this->prefix($id));
     }
@@ -55,12 +47,7 @@ class ContainerAdapter implements ContainerInterface
         return $this->prefix . '.' . $id;
     }
 
-    /**
-     * @param string $name
-     * @param array $arguments
-     * @return mixed
-     */
-    public function __call(string $name, array $arguments)
+    public function __call(string $name, array $arguments): mixed
     {
         return $this->container->$name(...$arguments); // @phpstan-ignore-line
     }

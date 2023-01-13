@@ -62,8 +62,8 @@ class ConfiguratorTest extends TestCase
         $container = self::createContainer(__DIR__ . '/fixtures/routes_fail.neon');
         $application = $container->getByType(App::class);
 
-        self::expectException(LogicException::class);
-        self::expectExceptionMessage('Callback SlimAPI\Tests\Functional\Routing\ConfiguratorTest::actionFail is not callable.');
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Callback SlimAPI\Tests\Functional\Routing\ConfiguratorTest::actionFail is not callable.');
         $application->handle($this->createRequestGet('/routes-test-fail'));
     }
 

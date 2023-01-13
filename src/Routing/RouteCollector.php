@@ -5,18 +5,13 @@ declare(strict_types=1);
 namespace SlimAPI\Routing;
 
 use Slim\Interfaces\RouteInterface;
-use Slim\Routing\RouteCollector as BaseRouteCollector;
 
-class RouteCollector extends BaseRouteCollector
+class RouteCollector extends \Slim\Routing\RouteCollector
 {
     /**
      * Create SlimAPI's Route object.
-     * @param array $methods
-     * @param string $pattern
-     * @param mixed $callable
-     * @return RouteInterface
      */
-    protected function createRoute(array $methods, string $pattern, $callable): RouteInterface
+    protected function createRoute(array $methods, string $pattern, mixed $callable): RouteInterface
     {
         return new Route(
             $methods,

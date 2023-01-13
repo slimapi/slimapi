@@ -5,11 +5,16 @@
 # see: https://redd.it/2jzp6k
 .docker                 export-ignore
 .dockerignore           export-ignore
+.ecrc                   export-ignore
 .editorconfig           export-ignore
+.env                    export-ignore
 .gitattributes          export-ignore
 .github                 export-ignore
 .gitignore              export-ignore
 Dockerfile              export-ignore
+README.md               export-ignore
+composer.json           export-ignore
+composer.lock           export-ignore
 docker-compose.yml      export-ignore
 phpcs.xml               export-ignore
 phpstan.neon            export-ignore

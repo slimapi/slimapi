@@ -32,7 +32,7 @@ class ExtensionTest extends TestCase
 
         $configuratorsClass = [];
         foreach ($configurators as $configurator) {
-            $configuratorsClass[] = get_class($configurator);
+            $configuratorsClass[] = $configurator::class;
         }
 
         self::assertCount(2, $configuratorsClass);

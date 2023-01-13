@@ -29,8 +29,8 @@ class DefaultGeneratorTest extends TestCase
     {
         $generator = new DefaultGenerator('/missing-schema', self::CACHE_DIR);
 
-        self::expectException(InvalidArgumentException::class);
-        self::expectExceptionMessage("Validation schema has not been found. Used mask: '/missing-schema'.");
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Validation schema has not been found. Used mask: '/missing-schema'.");
         $generator->generateSchemaList();
     }
 
@@ -38,8 +38,8 @@ class DefaultGeneratorTest extends TestCase
     {
         $generator = new DefaultGenerator('/var/www', self::CACHE_DIR);
 
-        self::expectException(InvalidArgumentException::class);
-        self::expectExceptionMessage(sprintf(
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf(
             "Cannot read file '/var/www'. Please check %%sourceMask%% parameter for %s",
             DefaultGenerator::class,
         ));
@@ -50,8 +50,8 @@ class DefaultGeneratorTest extends TestCase
     {
         $generator = new DefaultGenerator(__DIR__ . '/../fixtures/*.json', '/bad-cache-dir');
 
-        self::expectException(InvalidArgumentException::class);
-        self::expectExceptionMessage(sprintf(
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf(
             "Failed to create validation cache-file '/bad-cache-dir/validation.php'. Please check %%cacheDir%% parameter for %s.",
             DefaultGenerator::class,
         ));

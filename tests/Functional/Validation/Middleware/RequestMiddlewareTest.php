@@ -15,7 +15,6 @@ use SlimAPI\Tests\Functional\TestCase;
 
 class RequestMiddlewareTest extends TestCase
 {
-    /** @var App */
     protected static App $application;
 
     public function testValidationSuccess(): void
@@ -30,11 +29,11 @@ class RequestMiddlewareTest extends TestCase
 
     public function testValidationFailed(): void
     {
-        self::expectException(RequestException::class);
-        self::expectExceptionMessage(
+        $this->expectException(RequestException::class);
+        $this->expectExceptionMessage(
             '[{"property":"id","message":"String value found, but a number is required","constraint":"type"}]',
         );
-        self::expectExceptionCode(400);
+        $this->expectExceptionCode(400);
         self::$application->handle($this->createRequestPost('/foo/v1/bar', ['id' => 'not-type-number'], []));
     }
 
@@ -58,8 +57,8 @@ class RequestMiddlewareTest extends TestCase
 
     public function testGetSchemaMissing(): void
     {
-        self::expectException(LogicException::class);
-        self::expectExceptionMessage('Validation schema for request [PUT /foo/v1/missing-schema] has not been found.');
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Validation schema for request [PUT /foo/v1/missing-schema] has not been found.');
         self::$application->handle($this->createRequestPut('/foo/v1/missing-schema', ['foo' => 'bar']));
     }
 
@@ -81,9 +80,9 @@ class RequestMiddlewareTest extends TestCase
         $request = $request->withBody($body);
         $request = $request->withHeader('Content-Type', 'text/plain');
 
-        self::expectException(BadRequestException::class);
-        self::expectExceptionMessage("Supported content-type is 'application/json' only.");
-        self::expectExceptionCode(400);
+        $this->expectException(BadRequestException::class);
+        $this->expectExceptionMessage("Supported content-type is 'application/json' only.");
+        $this->expectExceptionCode(400);
         self::$application->handle($request);
     }
 
@@ -91,9 +90,9 @@ class RequestMiddlewareTest extends TestCase
     {
         $request = $this->createRequest('POST', '/foo/v1/bar');
 
-        self::expectException(BadRequestException::class);
-        self::expectExceptionMessage('Missing request body.');
-        self::expectExceptionCode(400);
+        $this->expectException(BadRequestException::class);
+        $this->expectExceptionMessage('Missing request body.');
+        $this->expectExceptionCode(400);
         self::$application->handle($request);
     }
 
@@ -105,9 +104,9 @@ class RequestMiddlewareTest extends TestCase
         $request = $request->withBody($body);
         $request = $request->withHeader('Content-Type', 'application/json');
 
-        self::expectException(BadRequestException::class);
-        self::expectExceptionMessage('Bad request body.');
-        self::expectExceptionCode(400);
+        $this->expectException(BadRequestException::class);
+        $this->expectExceptionMessage('Bad request body.');
+        $this->expectExceptionCode(400);
         self::$application->handle($request);
     }
 

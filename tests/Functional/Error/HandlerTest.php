@@ -10,7 +10,6 @@ use SlimAPI\Tests\Functional\TestCase;
 
 class HandlerTest extends TestCase
 {
-    /** @var App */
     protected static App $application;
 
     public function testDetermineStatusCode(): void

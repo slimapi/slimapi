@@ -39,8 +39,8 @@ class ExceptionTest extends TestCase
 
     public function testGenerateErrorFail(): void
     {
-        self::expectException(InvalidArgumentException::class);
-        self::expectExceptionMessage('Cannot guess $error, set manually please.');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Cannot guess $error, set manually please.');
         new Exception('msg', 999);
     }
 }

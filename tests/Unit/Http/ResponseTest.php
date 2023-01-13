@@ -24,8 +24,8 @@ class ResponseTest extends TestCase
         $response = (new Response());
         $response->getBody()->write('{');
 
-        self::expectException(JsonException::class);
-        self::expectExceptionMessage('Syntax error');
+        $this->expectException(JsonException::class);
+        $this->expectExceptionMessage('Syntax error');
         $response->getJson();
     }
 
@@ -33,8 +33,8 @@ class ResponseTest extends TestCase
     {
         $response = (new Response());
 
-        self::expectException(InternalServerError::class);
-        self::expectExceptionMessage('Empty body cannot be parsed.');
+        $this->expectException(InternalServerError::class);
+        $this->expectExceptionMessage('Empty body cannot be parsed.');
         $response->getJson();
     }
 
@@ -48,8 +48,8 @@ class ResponseTest extends TestCase
 
     public function testWithJsonError(): void
     {
-        self::expectException(JsonException::class);
-        self::expectExceptionMessage('Malformed UTF-8 characters, possibly incorrectly encoded');
+        $this->expectException(JsonException::class);
+        $this->expectExceptionMessage('Malformed UTF-8 characters, possibly incorrectly encoded');
         (new Response())->withJson(["bad utf\xFF"]);
     }
 
