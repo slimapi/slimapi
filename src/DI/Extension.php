@@ -13,14 +13,13 @@ use Nette\Schema\Schema;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\CallableResolver;
 use Slim\Middleware\ErrorMiddleware;
-use Slim\Psr7\Factory\ResponseFactory;
 use SlimAPI\App;
 use SlimAPI\AppFactory;
 use SlimAPI\Configurator\ChainConfigurator;
 use SlimAPI\Error\Handler;
 use SlimAPI\Error\Renderer;
 use SlimAPI\Http\RequestFactory;
-use SlimAPI\Http\Response;
+use SlimAPI\Http\ResponseFactory;
 
 class Extension extends CompilerExtension
 {
@@ -66,8 +65,7 @@ class Extension extends CompilerExtension
             ->setFactory(RequestFactory::class . '::createFromGlobals');
 
         $responseFactory = $builder->addDefinition($this->prefix('responseFactory'))
-            ->setFactory(ResponseFactory::class)
-            ->addSetup(new Statement(ResponseFactory::class . '::$responseClass = ?', [Response::class]));
+            ->setFactory(ResponseFactory::class);
 
         $builder->addDefinition($this->prefix('applicationFactory'))
             ->setFactory(AppFactory::class, [$responseFactory, $container, $callableResolver]);

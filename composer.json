@@ -15,15 +15,15 @@
     "require": {
         "php": "^8.1",
         "ext-json": "*",
+        "justinrainbow/json-schema": "^5.2",
         "nette/bootstrap": "^3.2",
-        "slim/slim": "^4.11",
-        "slimapi/psr7": "^1.4",
-        "justinrainbow/json-schema": "^5.2"
+        "slim/psr7": "^1.6",
+        "slim/slim": "^4.11"
     },
     "require-dev": {
-        "tracy/tracy": "2.9.5",
-        "symfony/console": "6.2.3",
-        "adriansuter/php-autoload-override": "1.4"
+        "adriansuter/php-autoload-override": "1.4",
+        "symfony/console": "6.3.0",
+        "tracy/tracy": "2.10.2"
     },
     "scripts": {
         "ec": "ec",
