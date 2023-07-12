@@ -1,0 +1,22 @@
+parameters:
+  strictValidation: true
+
+slimapi:
+  errors:
+    enableHandler: false
+
+  configurators:
+    - @SlimAPI\Validation\Configurator
+
+routes:
+  - [GET, /bar/v1/foo, SlimAPI\Tests\Functional\Validation\FactoryTest::handlerBar, {validation_mapper: '[GET]/bar/v1/foo{?filter}'}]
+
+services:
+  - SlimAPI\Tests\Functional\Validation\FactoryTest
+  -
+    factory: SlimAPI\Validation\Factory(%appDir%/Validation/fixtures/*.json, %tempDir%/cache, %strictValidation%)
+    setup:
+      - disableResponseValidation(true)
+  -
+    type: SlimAPI\Validation\Configurator
+    factory: @SlimAPI\Validation\Factory::createConfigurator()

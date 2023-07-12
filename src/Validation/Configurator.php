@@ -17,15 +17,36 @@ class Configurator implements ConfiguratorInterface
 
     private Validator $validator;
 
+    private bool $disableRequestValidation = false;
+
+    private bool $disableResponseValidation = false;
+
     public function __construct(Generator $generator, Validator $validator)
     {
         $this->generator = $generator;
         $this->validator = $validator;
     }
 
+    public function disableRequestValidation(bool $disable): self
+    {
+        $this->disableRequestValidation = $disable;
+        return $this;
+    }
+
+    public function disableResponseValidation(bool $disable): self
+    {
+        $this->disableResponseValidation = $disable;
+        return $this;
+    }
+
     public function configureApplication(App $application): void
     {
-        $application->add(new ResponseMiddleware($this->generator, $this->validator));
-        $application->add(new RequestMiddleware($this->generator, $this->validator));
+        if ($this->disableResponseValidation === false) {
+            $application->add(new ResponseMiddleware($this->generator, $this->validator));
+        }
+
+        if ($this->disableRequestValidation === false) {
+            $application->add(new RequestMiddleware($this->generator, $this->validator));
+        }
     }
 }

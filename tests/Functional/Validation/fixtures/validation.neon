@@ -24,9 +24,7 @@ routes:
 services:
   - SlimAPI\Tests\Functional\Validation\Middleware\RequestMiddlewareTest
   - SlimAPI\Tests\Functional\Validation\Middleware\ResponseMiddlewareTest
-
   - SlimAPI\Validation\Factory(%appDir%/Validation/fixtures/*.json, %tempDir%/cache, %strictValidation%)
-
   -
     type: SlimAPI\Validation\Configurator
     factory: @SlimAPI\Validation\Factory::createConfigurator()
